@@ -2,7 +2,9 @@
   <view class="register">
     <Nav>
       <template v-slot:left>
-        <u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
+        <view @click="toBack"
+          ><u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image
+        ></view>
       </template>
       <template v-slot:right>
         <u--image :src="errImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
@@ -109,7 +111,12 @@ export default {
       showPwt: true
     }
   },
-  methods: {}
+  methods: {
+    toBack() {
+      this.toBackPage()
+
+    }
+  }
 }
 </script>
 
