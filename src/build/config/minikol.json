@@ -1,9 +1,8 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/login/index"
+      "path": "pages/minikol/search/index"
     },
-   
     {
       "path": "pages/minikol/index/index"
     },
@@ -12,6 +11,9 @@
     },
     {
       "path": "pages/minikol/register/index"
+    },
+    {
+      "path": "pages/minikol/login/index"
     }
   ],
 
@@ -39,12 +41,15 @@
     "selectedColor": "#ffe431",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/minikol/index/index",
         "text": "聊天"
-    }, {
+      },
+      {
         "pagePath": "pages/minikol/my/index",
         "text": "我的"
-    }]
-}
+      }
+    ]
+  }
 }
