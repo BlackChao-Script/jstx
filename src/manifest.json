@@ -1,0 +1,50 @@
+{
+	"name": "dy",
+	"appid": "__UNI__HelloUniApp",
+	"description": "DY",
+	"versionName": "1.0.0",
+	"versionCode": "100",
+	"transformPx": false,
+	"mp-weixin": {
+		"appid": "wx9e0c2168159eab60",
+		"optimization": {
+			"subPackages": true
+		},
+		"setting": {
+			"urlCheck": false,
+			"es6": true,
+			"minified": false
+		},
+		"usingComponents": true,
+		"permission": {
+			"scope.userLocation": {
+				"desc": "定位"
+			}
+		}
+	},
+	"h5": {
+		"template": "template.h5.html",
+		"router": {
+			"mode": "hash",
+			"base": ""
+		},
+		"publicPath": "/mobile/minikol",
+		"async": {
+			"timeout": 20000
+		},
+		"devServer": {
+			"proxy": {
+				"/": {
+					"target": "https://www.info666.com/",
+					"secure": false,
+					"changeOrigin": true,
+					"pathRewrite": {
+						"^/": "/"
+					}
+				}
+			}
+		},
+		"publishPath": "/"
+	},
+	"vueVersion": "2"
+}

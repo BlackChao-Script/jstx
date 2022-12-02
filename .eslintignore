@@ -1,0 +1,7 @@
+build/*.js
+src/static
+src/uni_modules
+public
+dist
+node_modules
+src/pages.json

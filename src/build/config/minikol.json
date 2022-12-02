@@ -1,0 +1,46 @@
+{
+  "pages": [
+    {
+      "path": "pages/minikol/register/index"
+    },
+    {
+      "path": "pages/minikol/index/index"
+    },
+    {
+      "path": "pages/minikol/my/index"
+    }
+  ],
+
+  "globalStyle": {
+    "pageOrientation": "portrait",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff",
+    "backgroundColorTop": "#ffffff",
+    "backgroundColorBottom": "#ffffff",
+    "h5": {
+      "maxWidth": 1190,
+      "navigationBarTextStyle": "black",
+      "navigationBarBackgroundColor": "#ffffff"
+    }
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+    }
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#ffe431",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/minikol/index/index",
+        "text": "聊天"
+    }, {
+        "pagePath": "pages/minikol/my/index",
+        "text": "我的"
+    }]
+}
+}
