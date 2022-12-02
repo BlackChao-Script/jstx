@@ -9,12 +9,14 @@
         <u--image :src="titleImg" width="100rpx" height="50rpx" mode="widthFix"></u--image>
       </view>
       <view class="nav-icon">
-        <u--image
-          :src="iconImg.icon_search"
-          width="60rpx"
-          height="60rpx"
-          mode="widthFix"
-        ></u--image>
+        <view @click="goSearch">
+          <u--image
+            :src="iconImg.icon_search"
+            width="60rpx"
+            height="60rpx"
+            mode="widthFix"
+          ></u--image>
+        </view>
         <u--image
           :src="iconImg.icon_addgroup"
           width="50rpx"
@@ -57,7 +59,11 @@ export default {
     }
   },
   onLoad(options) {},
-  methods: {}
+  methods: {
+    goSearch(){
+      this.toNextPage('/pages/minikol/search/index')
+    }
+  }
 }
 </script>
 

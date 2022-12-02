@@ -4,11 +4,11 @@
       <view class="header-search">
         <u--input suffixIcon="search" suffixIconStyle="font-size: 50rpx"></u--input>
       </view>
-      <view class="header-text">取消</view>
+      <view class="header-text" @click="toBack">取消</view>
     </view>
     <view class="search-content">
       <view class="content-username">用户</view>
-      <view class="content-userlist" v-for="(item,index) in 5" :key="index">
+      <view class="content-userlist" v-for="(item, index) in 5" :key="index">
         <view class="userlist-img">
           <u-avatar :src="src" shape="square" size="90"></u-avatar>
         </view>
@@ -41,7 +41,11 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    toBack() {
+      this.toBackPage()
+    }
+  }
 }
 </script>
 

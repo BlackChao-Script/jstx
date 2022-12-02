@@ -1,9 +1,6 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/search/index"
-    },
-    {
       "path": "pages/minikol/index/index"
     },
     {
@@ -14,6 +11,9 @@
     },
     {
       "path": "pages/minikol/login/index"
+    },
+    {
+      "path": "pages/minikol/search/index"
     }
   ],
 
