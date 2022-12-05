@@ -1,6 +1,12 @@
 {
   "pages": [
     {
+      "path": "pages/minikol/group/creatgroup",
+      "style": {
+        "navigationBarTitleText": "创建群聊"
+      }
+    },
+    {
       "path": "pages/minikol/index/index",
       "style": {
         "navigationBarTitleText": "首页"
