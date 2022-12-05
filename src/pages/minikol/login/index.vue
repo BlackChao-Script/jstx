@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import Nav from '@common/Nav.vue'
-import Logo from '@common/Logo.vue'
+import Nav from '@common/nav.vue'
+import Logo from '@common/logo.vue'
 
 export default {
   components: {

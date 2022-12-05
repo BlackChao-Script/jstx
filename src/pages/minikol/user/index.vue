@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Nav from '@common/Nav.vue'
+import Nav from '@common/nav.vue'
 
 export default {
   components: {
@@ -62,6 +62,7 @@ export default {
 
 <style lang="scss">
 .user {
+  position: relative;
   .user-bg {
     position: fixed;
     top: 0;
@@ -129,7 +130,7 @@ export default {
     }
     .box-btn {
       position: absolute;
-      bottom: 170rpx;
+      bottom: 0rpx;
       text-align: center;
       font-size: 30rpx;
       width: 700rpx;

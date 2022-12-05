@@ -1,6 +1,12 @@
 {
   "pages": [
     {
+      "path": "pages/minikol/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
       "path": "pages/minikol/login/index",
       "style": {
         "navigationBarTitleText": "登录"
@@ -10,12 +16,6 @@
       "path": "pages/minikol/register/index",
       "style": {
         "navigationBarTitleText": "注册"
-      }
-    },
-    {
-      "path": "pages/minikol/index/index",
-      "style": {
-        "navigationBarTitleText": "首页"
       }
     },
     {
