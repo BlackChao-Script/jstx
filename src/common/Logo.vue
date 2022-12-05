@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss">
-.logo{
+.logo {
   height: 250rpx;
   display: flex;
   justify-content: center;

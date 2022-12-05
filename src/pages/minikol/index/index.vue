@@ -2,7 +2,7 @@
   <view class="page-content">
     <!-- nav -->
     <view class="content-nav">
-      <view class="nav-userImg">
+      <view class="nav-userImg" @click="toUser">
         <u-avatar :src="src" shape="square" size="60"></u-avatar>
       </view>
       <view class="nav-title">
@@ -60,8 +60,11 @@ export default {
   },
   onLoad(options) {},
   methods: {
-    goSearch(){
+    goSearch() {
       this.toNextPage('/pages/minikol/search/index')
+    },
+    toUser() {
+      this.toNextPage('/pages/minikol/user/index')
     }
   }
 }
@@ -78,7 +81,7 @@ export default {
       display: flex;
       align-items: center;
       margin-left: 20rpx;
-      width: 150rpx;
+      width: 140rpx;
     }
     .nav-title {
       flex: 1;

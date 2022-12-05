@@ -114,7 +114,6 @@ export default {
   methods: {
     toBack() {
       this.toBackPage()
-
     }
   }
 }

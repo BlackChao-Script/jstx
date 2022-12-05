@@ -1,25 +1,48 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/index/index"
+      "path": "pages/minikol/login/index",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
     },
     {
-      "path": "pages/minikol/my/index"
+      "path": "pages/minikol/register/index",
+      "style": {
+        "navigationBarTitleText": "注册"
+      }
     },
     {
-      "path": "pages/minikol/register/index"
+      "path": "pages/minikol/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
     },
     {
-      "path": "pages/minikol/login/index"
+      "path": "pages/minikol/my/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+
+    {
+      "path": "pages/minikol/search/index",
+      "style": {
+        "navigationBarTitleText": "搜索"
+      }
     },
     {
-      "path": "pages/minikol/search/index"
+      "path": "pages/minikol/user/index",
+      "style": {
+        "navigationBarTitleText": "用户详情"
+      }
     }
   ],
 
   "globalStyle": {
     "pageOrientation": "portrait",
     "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "即时通信",
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#ffffff",
     "backgroundColorTop": "#ffffff",
