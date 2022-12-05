@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     addUser() {
-      console.log('111')
+      this.toNextPage('/pages/minikol/user/adduser')
     },
     toBack() {
       this.toBackPage()

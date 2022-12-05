@@ -32,6 +32,12 @@
       }
     },
     {
+      "path": "pages/minikol/user/adduser",
+      "style": {
+        "navigationBarTitleText": "添加用户"
+      }
+    },
+    {
       "path": "pages/minikol/user/index",
       "style": {
         "navigationBarTitleText": "用户详情"
