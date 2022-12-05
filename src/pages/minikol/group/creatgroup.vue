@@ -2,7 +2,7 @@
   <view class="creatgroup">
     <Nav>
       <template v-slot:left>
-        <view style="font-size: 30rpx">取消</view>
+        <view @click="toBack" style="font-size: 30rpx">取消</view>
       </template>
       <template v-slot:mid>
         <view style="font-size: 30rpx">创建群聊</view>
@@ -100,6 +100,9 @@ export default {
   methods: {
     checkboxChange(n) {
       console.log('change', n)
+    },
+    toBack() {
+      this.toBackPage()
     }
   }
 }

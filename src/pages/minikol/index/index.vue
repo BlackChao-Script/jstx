@@ -17,12 +17,14 @@
             mode="widthFix"
           ></u--image>
         </view>
-        <u--image
-          :src="iconImg.icon_addgroup"
-          width="50rpx"
-          height="50rpx"
-          mode="widthFix"
-        ></u--image>
+        <view @click="toAddGroup">
+          <u--image
+            :src="iconImg.icon_addgroup"
+            width="50rpx"
+            height="50rpx"
+            mode="widthFix"
+          ></u--image>
+        </view>
       </view>
     </view>
     <!-- userList -->
@@ -65,6 +67,9 @@ export default {
     },
     toUser() {
       this.toNextPage('/pages/minikol/user/index')
+    },
+    toAddGroup() {
+      this.toNextPage('/pages/minikol/group/creatgroup')
     }
   }
 }

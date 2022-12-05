@@ -1,9 +1,9 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/group/creatgroup",
+      "path": "pages/minikol/group/details",
       "style": {
-        "navigationBarTitleText": "创建群聊"
+        "navigationBarTitleText": "群详情"
       }
     },
     {
@@ -47,6 +47,12 @@
       "path": "pages/minikol/user/index",
       "style": {
         "navigationBarTitleText": "用户详情"
+      }
+    },
+    {
+      "path": "pages/minikol/group/creatgroup",
+      "style": {
+        "navigationBarTitleText": "创建群聊"
       }
     }
   ],
