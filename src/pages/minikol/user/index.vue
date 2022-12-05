@@ -17,7 +17,7 @@
     <view class="user-box">
       <view class="box-img" :style="{ backgroundImage: `url(${userImg})` }">
         <view class="img-sexIcon" :style="{ backgroundColor: sex == '男' ? '#ffe431' : '#ff5d5b' }">
-          <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img" mode="widthFix"></image>
+          <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>
         </view>
       </view>
       <view class="box-title">
