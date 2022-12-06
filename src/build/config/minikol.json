@@ -1,7 +1,7 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/phone/voiceCalls"
+      "path": "pages/minikol/chitchat/index"
     },
     {
       "path": "pages/minikol/index/index",
@@ -62,6 +62,9 @@
       "style": {
         "navigationBarTitleText": "创建群聊"
       }
+    },
+    {
+      "path": "pages/minikol/phone/voiceCalls"
     }
   ],
 
