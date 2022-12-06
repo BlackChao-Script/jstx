@@ -33,10 +33,14 @@
     </view>
     <u-divider></u-divider>
     <view class="details-bottom">
-      <view class="bottom-item">
-        <view class="item-name"></view>
-        <view class="item-text"></view>
+      <view class="bottom-item" v-for="(value, index) in detailsBottomList" :key="index">
+        <view class="item-name">{{ value.name }}</view>
+        <view class="item-text">{{ value.text }}</view>
         <view class="item-icon">></view>
+        <view class="bottom-end">
+          <view class="end-text"></view>
+          <view class="end-switch"></view>
+        </view>
       </view>
     </view>
   </view>
@@ -69,6 +73,20 @@ export default {
         },
         {
           name: '老王111'
+        }
+      ],
+      detailsBottomList: [
+        {
+          name: '群名称',
+          text: '开心就好'
+        },
+        {
+          name: '群公告',
+          text: '特别的爱给特别的你，就阿什顿库，大哭高科技啊老哭高科技啊老大。领导咖啡什顿库，大哭高科技啊老哭高sadasdasd'
+        },
+        {
+          name: '群内名',
+          text: '高兴就好'
         }
       ]
     }
@@ -171,6 +189,27 @@ export default {
           text-overflow: ellipsis; //溢出用省略号显示
           white-space: nowrap; //溢出不换行
         }
+      }
+    }
+  }
+  .details-bottom {
+    .bottom-item {
+      font-size: 35rpx;
+      display: flex;
+      height: 100rpx;
+      .item-name {
+        width: 150rpx;
+      }
+      .item-text {
+        color: #808187;
+        overflow: hidden; //超出的文本隐藏
+        text-overflow: ellipsis; //溢出用省略号显示
+        white-space: nowrap; //溢出不换行
+        flex: 1;
+      }
+      .item-icon {
+        color: #808187;
+        width: 30rpx;
       }
     }
   }
