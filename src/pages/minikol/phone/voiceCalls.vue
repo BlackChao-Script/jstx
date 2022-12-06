@@ -7,7 +7,9 @@
         ></view>
       </template>
       <template v-slot:mid>
-        <view style="font-size: 30rpx">邀请你语音通话...</view>
+        <view style="font-size: 30rpx">{{
+          answerBol === false ? '邀请你语音通话...' : callDurationTime
+        }}</view>
       </template>
     </Nav>
     <view class="invite-bg">
@@ -22,9 +24,9 @@
     <view class="invite-btns">
       <view
         class="btns-hangup"
-        v-for="(value, index) in inviteBtnsData"
-        :key="index"
-        @click="changAnswer(value.text)"
+        v-for="value in inviteBtnsData"
+        :key="value.id"
+        @click="changAnswer(value.id)"
       >
         <view class="hangup-icon" :style="{ backgroundColor: value.bgc }">
           <u--image :src="value.img" width="80rpx" height="80rpx" mode="widthFix"></u--image>
@@ -50,24 +52,68 @@ export default {
       answerImg: require('@/assets/img/接听.png'),
       inviteBtnsData: [
         {
+          id: 'gd',
           img: require('@/assets/img/挂断.png'),
           text: '挂断',
           bgc: '#ff5d5b'
         },
         {
+          id: 'jt',
           img: require('@/assets/img/接听.png'),
           text: '接听',
           bgc: '#30c74d'
         }
       ],
-      answerBol: false
+      inviteBtnsDatas: [
+        {
+          id: 'mk',
+          img: require('@/assets/img/麦克风.png'),
+          text: '麦克风已开',
+          bgc: '#fff'
+        },
+        {
+          id: 'ys',
+          img: require('@/assets/img/关闭扬声器.png'),
+          text: '扬声器已关',
+          bgc: '#fff'
+        }
+      ],
+      answerBol: false,
+      microphoneBol: false,
+      speakerBol: false,
+      callDurationTime: '02:32'
     }
   },
 
   methods: {
-    changAnswer(value) {
-      if (value == '接听') {
-        this.answerBol = !this.answerBol
+    changAnswer(id) {
+      switch (id) {
+        case 'jt':
+          this.answerBol = !this.answerBol
+          this.inviteBtnsData.pop()
+          this.inviteBtnsData.unshift(this.inviteBtnsDatas[0])
+          this.inviteBtnsData.push(this.inviteBtnsDatas[1])
+          break
+        case 'mk':
+          this.microphoneBol = !this.microphoneBol
+          if (this.microphoneBol == true) {
+            this.inviteBtnsDatas[0].img = require('@/assets/img/关闭麦克风.png')
+            this.inviteBtnsDatas[0].text = '麦克风已关'
+          } else {
+            this.inviteBtnsDatas[0].img = require('@/assets/img/麦克风.png')
+            this.inviteBtnsDatas[0].text = '麦克风已开'
+          }
+          break
+        case 'ys':
+          this.speakerBol = !this.speakerBol
+          if (this.speakerBol == false) {
+            this.inviteBtnsDatas[1].img = require('@/assets/img/关闭扬声器.png')
+            this.inviteBtnsDatas[1].text = '麦克风已关'
+          } else {
+            this.inviteBtnsDatas[1].img = require('@/assets/img/扬声器.png')
+            this.inviteBtnsDatas[1].text = '扬声器已开'
+          }
+          break
       }
     }
   }
