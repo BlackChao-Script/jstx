@@ -19,7 +19,7 @@
       </view>
       <view class="box-username">春暖花开</view>
       <view class="box-messageBoard">
-        <u--textarea v-model="value1" placeholder="请输入内容" height="650rpx"></u--textarea
+        <textarea v-model="value1" placeholder="请输入内容"></textarea
       ></view>
       <view class="box-btn">
         <view class="btn-a" @click="toBack">取消</view>
@@ -93,6 +93,8 @@ export default {
       margin: 50rpx auto;
       width: 85%;
       border-radius: 20rpx;
+      height: 650rpx;
+      padding: 10rpx;
       background-color: #f3f4f6;
     }
     .box-btn {
