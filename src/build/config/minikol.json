@@ -1,6 +1,9 @@
 {
   "pages": [
     {
+      "path": "pages/minikol/phone/voiceCalls"
+    },
+    {
       "path": "pages/minikol/index/index",
       "style": {
         "navigationBarTitleText": "首页"
