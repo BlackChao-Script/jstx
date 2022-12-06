@@ -40,7 +40,7 @@
           </view>
           <view class="item-right">
             <view class="right-userimg">
-              <image class="userimg-img" :src="userImg"  mode="widthFix"></image>
+              <image class="userimg-img" :src="userImg"></image>
             </view>
             <view class="right-username">老王老王</view>
           </view>
