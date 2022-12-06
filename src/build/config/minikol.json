@@ -1,12 +1,6 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/group/modify",
-      "style": {
-        "navigationBarTitleText": "修改群聊"
-      }
-    },
-    {
       "path": "pages/minikol/index/index",
       "style": {
         "navigationBarTitleText": "首页"
@@ -53,6 +47,12 @@
       "path": "pages/minikol/group/details",
       "style": {
         "navigationBarTitleText": "群详情"
+      }
+    },
+    {
+      "path": "pages/minikol/group/modify",
+      "style": {
+        "navigationBarTitleText": "修改群聊"
       }
     },
     {

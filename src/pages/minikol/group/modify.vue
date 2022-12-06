@@ -3,7 +3,7 @@
     <view style="border-bottom: 1rpx solid #ededed">
       <Nav>
         <template v-slot:left>
-          <view>取消</view>
+          <view @click="toBack">取消</view>
         </template>
         <template v-slot:mid>
           <view>修改群聊</view>
@@ -30,7 +30,12 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    toBack(){
+        this.toBackPage()
+    }
+    
+  }
 }
 </script>
 
