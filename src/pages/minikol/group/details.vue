@@ -12,7 +12,9 @@
     <view class="details-users">
       <view class="users-title">
         <view class="title-left">群成员</view>
-        <view class="title-right">成员管理 ></view>
+        <view class="title-right"
+          >成员管理 <u-icon name="arrow-right" size="30" style="margin-left: 15rpx"></u-icon
+        ></view>
       </view>
       <view class="users-list">
         <view class="list-item" v-for="(value, index) in usersList" :key="index">
@@ -36,12 +38,17 @@
       <view class="bottom-item" v-for="(value, index) in detailsBottomList" :key="index">
         <view class="item-name">{{ value.name }}</view>
         <view class="item-text">{{ value.text }}</view>
-        <view class="item-icon">></view>
-        <view class="bottom-end">
-          <view class="end-text"></view>
-          <view class="end-switch"></view>
+        <view class="item-icon">
+          <u-icon name="arrow-right" size="30" style="margin-left: 15rpx"></u-icon>
         </view>
       </view>
+      <view class="details-end">
+        <view class="end-text">消息免打扰</view>
+        <view class="end-switch">
+          <u-switch v-model="switchValue" activeColor="#ffe431" size="50"></u-switch>
+        </view>
+      </view>
+      <view class="details-exit"> 退出群聊 </view>
     </view>
   </view>
 </template>
@@ -51,7 +58,7 @@ export default {
   data() {
     return {
       userImg: 'https://cdn.uviewui.com/uview/album/5.jpg',
-      icon_addgroup: require('@/assets/img/add group.png'),
+      icon_addgroup: require('@/assets/img/Group.png'),
       usersList: [
         {
           name: '老王111'
@@ -88,7 +95,8 @@ export default {
           name: '群内名',
           text: '高兴就好'
         }
-      ]
+      ],
+      switchValue: true
     }
   },
   onLoad(options) {
@@ -212,6 +220,32 @@ export default {
         width: 30rpx;
       }
     }
+  }
+  .details-end {
+    display: flex;
+    align-items: center;
+
+    .end-text {
+      flex: 1;
+    }
+    .end-switch {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .details-exit {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100rpx;
+    text-align: center;
+    line-height: 100rpx;
+    width: 100%;
+    color: #ff5d5b;
+    font-size: 30rpx;
+    border: 2rpx solid #fdfdfd;
+    background-color: #fff;
   }
 }
 </style>
