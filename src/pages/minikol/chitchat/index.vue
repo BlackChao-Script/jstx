@@ -84,6 +84,7 @@ export default {
           '日' +
           now.toTimeString().substr(0, 5)
       }
+      this.mes.reverse()
     }
   }
 }
