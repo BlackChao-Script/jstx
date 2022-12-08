@@ -33,4 +33,6 @@ const app = new Vue({
   ...App,
   store
 })
+require('@/utils/axios/index.js')(app)
+
 app.$mount()

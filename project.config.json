@@ -39,21 +39,16 @@
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "scripts": {},
   "appid": "wx4fb43267e9a5396e",
   "projectname": "yueworld_pms_mobile",
-  "condition": {
-    "game": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": []
-    }
+  "condition": {},
+  "libVersion": "2.28.1",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }

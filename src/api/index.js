@@ -1,9 +1,11 @@
-/*
- * @Author: fhj
- * @LastEditors: fhj
- * @Description:  api主入口   相关api需要根据views一样的层级放在api/下
- */
+const http = uni.$u.http
 
-// export * from './test'
-
-export * from './publish'
+class API {
+  login(params, config = {}) {
+    http.post('/user/login', params, config)
+  }
+  register(params, config = {}) {
+    http.post('/user/register', params, config)
+  }
+}
+export default new API()

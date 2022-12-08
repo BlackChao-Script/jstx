@@ -1,9 +1,6 @@
 <template>
   <view class="register">
     <Nav>
-      <template v-slot:left>
-        <u--image :src="errImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
-      </template>
       <template v-slot:right>
         <view @click="toRegister">注册</view>
       </template>
