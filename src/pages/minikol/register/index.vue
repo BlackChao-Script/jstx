@@ -11,17 +11,17 @@
     <view class="register-box">
       <view class="box-title">注册</view>
       <view style="margin-top: 30rpx">
-        <u--form :model="model1" :rules="rules" ref="form1">
+        <u--form :model="modl1" :rules="rules" ref="form1">
           <u-form-item prop="userInfo.nickname" borderBottom ref="item1">
             <u--input
-              v-model="model1.userInfo.nickname"
+              v-model="modl1.userInfo.nickname"
               border="none"
               placeholder="请取个名字"
             ></u--input>
           </u-form-item>
           <u-form-item prop="userInfo.user_name" borderBottom ref="item1">
             <u--input
-              v-model="model1.userInfo.user_name"
+              v-model="modl1.userInfo.user_name"
               border="none"
               type="number"
               placeholder="请输入账号"
@@ -30,7 +30,7 @@
           <u-form-item prop="userInfo.password" borderBottom ref="item1">
             <!-- #ifdef H5 -->
             <u--input
-              v-model="model1.userInfo.password"
+              v-model="modl1.userInfo.password"
               :password="showPwt"
               border="none"
               placeholder="这里输入密码"
@@ -47,7 +47,7 @@
             <!--  #endif -->
             <!--  #ifdef  MP-WEIXIN -->
             <u-input
-              v-model="model1.userInfo.password"
+              v-model="modl1.userInfo.password"
               :password="showPwt"
               border="none"
               placeholder="这里输入密码"
@@ -64,7 +64,12 @@
             <!--  #endif -->
           </u-form-item>
         </u--form>
-        <view class="box-button" @click="btnRegister">注册</view>
+        <view
+          class="box-button"
+          @click="btnRegister"
+          :style="{ backgroundColor: CshowBtnColor == true ? '#ffe431' : '#d4d4d6' }"
+          >注册</view
+        >
       </view>
     </view>
   </view>
@@ -73,7 +78,7 @@
 <script>
 import Nav from '@common/nav.vue'
 import Logo from '@common/logo.vue'
-import { register } from '@/api'
+import { register } from '@/api/index.js'
 
 export default {
   components: {
@@ -84,7 +89,7 @@ export default {
     return {
       leftImg: require('@/assets/img/向左.png'),
       errImg: require('@/assets/img/错.png'),
-      model1: {
+      modl1: {
         userInfo: {
           nickname: '',
           user_name: '',
@@ -134,18 +139,39 @@ export default {
           }
         ]
       },
-      suffixIcon: 'eye-fill',
-      suffixIcon: 'eye-fill',
       showPwt: true
     }
   },
-
+  computed: {
+    CshowBtnColor() {
+      if (
+        this.modl1.userInfo.nickname.length &&
+        this.modl1.userInfo.user_name.length &&
+        this.modl1.userInfo.password.length !== 0
+      ) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
     toBack() {
       this.toBackPage()
     },
     btnRegister() {
-      console.log('注册')
+      this.$refs.form1
+        .validate()
+        .then(async (res) => {
+          const pamams = this.model1.userInfo
+          await register(pamams)
+          uni.$u.toast('注册成功')
+          this.$refs.form1.resetFields()
+          this.toBackPage()
+        })
+        .catch((errors) => {
+          uni.$u.toast('注册失败')
+        })
     }
   }
 }
@@ -167,7 +193,7 @@ export default {
       text-align: center;
       line-height: 100rpx;
       color: #fff;
-      background-color: #d4d4d6;
+      // background-color: #d4d4d6;
     }
   }
 }

@@ -1,11 +1,6 @@
 const http = uni.$u.http
 
-class API {
-  login(params, config = {}) {
-    http.post('/user/login', params, config)
-  }
-  register(params, config = {}) {
-    http.post('/user/register', params, config)
-  }
-}
-export default new API()
+// 登录
+export const login = (params, config = {}) => http.post('/user/login', params, config)
+// 注册
+export const register = (params, config = {}) => http.post('/user/register', params, config)
