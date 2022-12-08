@@ -17,17 +17,25 @@ export default {
   data() {
     return {}
   },
+  onLoad() {
+  },
   methods: {}
 }
 </script>
 
 <style lang="scss">
 .nav {
+  border-bottom: 1rpx solid #ededed;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   height: 75rpx;
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--window-top);
+  z-index: 999;
+  background-color: #ffff;
   .nav-left {
     flex: 1;
     .left-box {

@@ -1,18 +1,16 @@
 <template>
   <view class="chitchat">
-    <view style="border-bottom: 1rpx solid #ededed">
-      <Nav>
-        <template v-slot:left>
-          <view @click="toBack"
-            ><u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image
-          ></view>
-        </template>
-        <template v-slot:mid>
-          <view style="font-size: 35rpx">开心就好</view>
-        </template>
-      </Nav>
-      <view class="chitchat-list"></view>
-    </view>
+    <Nav>
+      <template v-slot:left>
+        <view @click="toBack"
+          ><u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image
+        ></view>
+      </template>
+      <template v-slot:mid>
+        <view style="font-size: 35rpx">开心就好</view>
+      </template>
+    </Nav>
+    <view class="chitchat-list"></view>
     <scroll-view class="chat" :scroll-y="true" :scroll-with-animation="true">
       <view class="chat-main">
         <view class="chat-ls" v-for="value in mes" :key="value.tip">
@@ -43,7 +41,14 @@
           <u--image :src="boxLeftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
         </view>
         <view class="box-inp">
-          <textarea class="inp-text" auto-height v-model="value" :fixed="true" maxlength="75" />
+          <textarea
+            class="inp-text"
+            auto-height
+            v-model="value"
+            :fixed="true"
+            confirm-type="send"
+            @confirm="confirmMessage"
+          />
         </view>
         <view class="box-right">
           <u--image :src="boxRightImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
@@ -97,6 +102,10 @@ export default {
           i.time = this.dateTime(i.time)
         }
       }
+    },
+    confirmMessage(e) {
+      console.log(e.detail.value)
+      this.value = ''
     }
   }
 }
@@ -132,13 +141,13 @@ export default {
           }
           .msg-content {
             max-width: 480rpx;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             margin: 0 20rpx;
             .content-text {
-              font-size: 35rpx;
-              padding: 20rpx;
+              display: flex;
+              align-items: center;
+              min-height: 70rpx;
+              font-size: 30rpx;
+              padding: 10rpx;
             }
             .content-img {
               width: 400rpx;
@@ -176,23 +185,29 @@ export default {
   border-top: 1rpx solid #ededed;
   background-color: #fff;
   width: 100%;
-  min-height: 120rpx;
+  min-height: 100rpx;
   bottom: 0;
   left: 0;
   .nav-box {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     padding: 0 20rpx;
     height: 100rpx;
     margin-top: 20rpx;
+    margin-bottom: 25rpx;
+    height: auto;
     .box-left {
       margin-right: 20rpx;
     }
     .box-inp {
       flex: 1;
-      min-height: 60rpx;
-      background-color: #f4f4f4;
-      border-radius: 15rpx;
+      .inp-text {
+        font-size: 30rpx;
+        max-width: 490rpx;
+        min-height: 60rpx;
+        background-color: #f4f4f4;
+        border-radius: 15rpx;
+      }
     }
     .box-right {
       display: flex;

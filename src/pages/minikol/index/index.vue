@@ -29,7 +29,7 @@
     </view>
     <!-- userList -->
     <view class="content-list">
-      <view class="list-box" v-for="(item, index) in 6" :key="index">
+      <view class="list-box" v-for="(item, index) in 20" :key="index" @click="toChitchat">
         <view class="box-img">
           <u-avatar :src="src" shape="square" size="80"></u-avatar>
           <view class="box-badge">
@@ -60,7 +60,9 @@ export default {
       } // 图标
     }
   },
-  onLoad(options) {},
+  onLoad(options) {
+    console.log(this.$store.state.navHight)
+  },
   methods: {
     goSearch() {
       this.toNextPage('/pages/minikol/search/index')
@@ -70,6 +72,9 @@ export default {
     },
     toAddGroup() {
       this.toNextPage('/pages/minikol/group/creatgroup')
+    },
+    toChitchat() {
+      this.toNextPage('/pages/minikol/chitchat/index')
     }
   }
 }
@@ -82,6 +87,12 @@ export default {
     height: 70rpx;
     padding-bottom: 5rpx;
     box-shadow: 0px 0.5px 0px 0px rgba(0, 0, 0, 0.1);
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--window-top);
+
+    z-index: 999;
+    background-color: #ffff;
     .nav-userImg {
       display: flex;
       align-items: center;
@@ -116,7 +127,7 @@ export default {
           position: absolute;
           top: 15rpx;
           right: -10rpx;
-          z-index: 999;
+          z-index: 2;
         }
       }
       .box-content {

@@ -1,21 +1,13 @@
-<!--
- * @Author: fhj
- * @LastEditors: fhj
- * @Description: 
--->
 <script>
 export default {
   mpType: 'app',
   onLaunch: async function () {},
-  onShow: function () {},
-  onHide: function () {
-    console.log('App Hide')
-  },
+  onShow() {},
+  onHide() {},
   globalData: {
     test: ''
   },
-  methods: {},
-  destroyed() {}
+  methods: {}
 }
 </script>
 

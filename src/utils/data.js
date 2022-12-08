@@ -4,7 +4,7 @@ export default [
     imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
     message: 'sadsdasdfcvjcvhdijouijnc',
     type: 0, // 内容类型 (0文字、1图片、2音频链接)
-    time: new Date() - 1000,
+    time: new Date(),
     tip: 0
   },
   {
@@ -18,7 +18,7 @@ export default [
   {
     id: 'b',
     imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
-    message: '你撒滴哦偶才收到i第四Ohio分好低哦分和第三方好的',
+    message: '你撒滴哦偶才收到i第四Ohio分好低哦分和第三方好',
     type: 0, // 内容类型 (0文字、1图片、2音频链接)
     time: new Date() - 1000 * 32,
     tip: 2
@@ -44,7 +44,7 @@ export default [
     imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
     message: 'https://cdn.uviewui.com/uview/album/5.jpg',
     type: 1, // 内容类型 (0文字、1图片、2音频链接)
-    time: new Date() - 1000 * 121,
+    time: new Date() - 1000 * 12111,
     tip: 5
   },
   {
@@ -58,9 +58,9 @@ export default [
   {
     id: 'a',
     imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
-    message: 'xczxczxsadasdasdsaddfczxczxcqwdoko',
+    message: 'xczzzzzzzzzz实是a',
     type: 0, // 内容类型 (0文字、1图片、2音频链接)
-    time: new Date() - 1000 * 1000 * 10000,
+    time: new Date() - 1000 * 1000,
     tip: 7
   }
 ]

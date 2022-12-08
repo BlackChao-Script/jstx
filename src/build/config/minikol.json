@@ -1,67 +1,37 @@
 {
   "pages": [
     {
+      "path": "pages/minikol/index/index"
+    },
+    {
       "path": "pages/minikol/chitchat/index"
     },
     {
-      "path": "pages/minikol/index/index",
-      "style": {
-        "navigationBarTitleText": "首页"
-      }
+      "path": "pages/minikol/login/index"
     },
     {
-      "path": "pages/minikol/login/index",
-      "style": {
-        "navigationBarTitleText": "登录"
-      }
+      "path": "pages/minikol/register/index"
     },
     {
-      "path": "pages/minikol/register/index",
-      "style": {
-        "navigationBarTitleText": "注册"
-      }
+      "path": "pages/minikol/my/index"
     },
     {
-      "path": "pages/minikol/my/index",
-      "style": {
-        "navigationBarTitleText": "我的"
-      }
+      "path": "pages/minikol/search/index"
     },
     {
-      "path": "pages/minikol/search/index",
-      "style": {
-        "navigationBarTitleText": "搜索"
-      }
+      "path": "pages/minikol/user/adduser"
     },
     {
-      "path": "pages/minikol/user/adduser",
-      "style": {
-        "navigationBarTitleText": "添加用户"
-      }
+      "path": "pages/minikol/user/index"
     },
     {
-      "path": "pages/minikol/user/index",
-      "style": {
-        "navigationBarTitleText": "用户详情"
-      }
+      "path": "pages/minikol/group/details"
     },
     {
-      "path": "pages/minikol/group/details",
-      "style": {
-        "navigationBarTitleText": "群详情"
-      }
+      "path": "pages/minikol/group/modify"
     },
     {
-      "path": "pages/minikol/group/modify",
-      "style": {
-        "navigationBarTitleText": "修改群聊"
-      }
-    },
-    {
-      "path": "pages/minikol/group/creatgroup",
-      "style": {
-        "navigationBarTitleText": "创建群聊"
-      }
+      "path": "pages/minikol/group/creatgroup"
     },
     {
       "path": "pages/minikol/phone/voiceCalls"
@@ -69,18 +39,10 @@
   ],
 
   "globalStyle": {
-    "pageOrientation": "portrait",
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "即时通信",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#ffffff",
-    "backgroundColorTop": "#ffffff",
-    "backgroundColorBottom": "#ffffff",
-    "h5": {
-      "maxWidth": 1190,
-      "navigationBarTextStyle": "black",
-      "navigationBarBackgroundColor": "#ffffff"
-    }
+    "backgroundColor": "#ffffff"
   },
   "easycom": {
     "autoscan": true,
@@ -96,10 +58,14 @@
     "list": [
       {
         "pagePath": "pages/minikol/index/index",
+        "iconPath": "static/image/duihua_s.png",
+        "selectedIconPath": "static/image/duihua.png",
         "text": "聊天"
       },
       {
         "pagePath": "pages/minikol/my/index",
+        "iconPath": "static/image/my_s.png",
+        "selectedIconPath": "static/image/my.png",
         "text": "我的"
       }
     ]
