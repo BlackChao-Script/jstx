@@ -16,7 +16,7 @@
     <scroll-view class="chat" :scroll-y="true" :scroll-with-animation="true">
       <view class="chat-main">
         <view class="chat-ls" v-for="value in mes" :key="value.tip">
-          <view class="ls-time">{{ value.time }}</view>
+          <view class="ls-time" v-if="value.time != ''">{{ value.time }}</view>
           <view class="ls-msg msg-left" :class="[value.id === 'a' ? 'msg-left' : 'msg-right']">
             <view class="msg">
               <image :src="value.imgUrl" class="msg-img"></image>
@@ -24,20 +24,26 @@
             <view class="msg-content">
               <view class="content-text" v-if="value.type === 0">{{ value.message }}</view
               ><view class="content-img" v-else-if="value.type === 1">
-                <image :src="value.imgUrl" class="img" mode="widthFix"></image>
+                <image
+                  :src="value.imgUrl"
+                  class="img"
+                  mode="widthFix"
+                  @click="imgPreview(value.imgUrl)"
+                ></image>
               </view>
             </view>
           </view>
         </view>
       </view>
     </scroll-view>
+
     <view class="chitchat-nav">
       <view class="nav-box">
         <view class="box-left">
           <u--image :src="boxLeftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
         </view>
         <view class="box-inp">
-          <u--input border="none" v-model="value"></u--input>
+          <textarea class="inp-text" auto-height v-model="value" :fixed="true" maxlength="75" />
         </view>
         <view class="box-right">
           <u--image :src="boxRightImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
@@ -62,29 +68,35 @@ export default {
       boxRightImg: require('@/assets/img/表情.png'),
       boxRightImga: require('@/assets/img/更多.png'),
       value: '',
-      mes
+      mes,
+      oldTime: new Date()
     }
   },
   onLoad() {
-    this.getData(this.mes)
+    this.getMsg(this.mes)
   },
   methods: {
     toBack() {
       this.toBackPage()
     },
-    getData(n) {
-      for (let i of n) {
-        let now = new Date(i.time),
-          m = now.getMonth() + 1,
-          d = now.getDate()
-        i.time =
-          (m < 10 ? '0' + m : m) +
-          '月' +
-          (d < 10 ? '0' + d : d) +
-          '日' +
-          now.toTimeString().substr(0, 5)
+    imgPreview(img) {
+      uni.previewImage({
+        urls: [img]
+      })
+    },
+    getMsg(data) {
+      data.reverse()
+      // 时间间隔
+      for (let i of data) {
+        let T = this.spacTime(this.oldTime, i.time)
+        if (T) {
+          this.oldTime = T
+        }
+        i.time = T
+        if (i.time !== '') {
+          i.time = this.dateTime(i.time)
+        }
       }
-      this.mes.reverse()
     }
   }
 }
@@ -164,7 +176,7 @@ export default {
   border-top: 1rpx solid #ededed;
   background-color: #fff;
   width: 100%;
-  height: 120rpx;
+  min-height: 120rpx;
   bottom: 0;
   left: 0;
   .nav-box {
@@ -178,7 +190,7 @@ export default {
     }
     .box-inp {
       flex: 1;
-      height: 60rpx;
+      min-height: 60rpx;
       background-color: #f4f4f4;
       border-radius: 15rpx;
     }

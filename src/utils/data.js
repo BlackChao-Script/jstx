@@ -46,5 +46,21 @@ export default [
     type: 1, // 内容类型 (0文字、1图片、2音频链接)
     time: new Date() - 1000 * 121,
     tip: 5
+  },
+  {
+    id: 'b',
+    imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
+    message: 'https://cdn.uviewui.com/uview/album/5.jpg',
+    type: 1, // 内容类型 (0文字、1图片、2音频链接)
+    time: new Date() - 1000 * 10000,
+    tip: 6
+  },
+  {
+    id: 'a',
+    imgUrl: 'https://cdn.uviewui.com/uview/album/5.jpg',
+    message: 'xczxczxsadasdasdsaddfczxczxcqwdoko',
+    type: 0, // 内容类型 (0文字、1图片、2音频链接)
+    time: new Date() - 1000 * 1000 * 10000,
+    tip: 7
   }
 ]
