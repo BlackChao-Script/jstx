@@ -61,7 +61,6 @@ export default {
     }
   },
   onLoad(options) {
-    console.log(this.$store.state.navHight)
   },
   methods: {
     goSearch() {

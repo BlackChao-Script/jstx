@@ -63,6 +63,23 @@
             </u-input>
             <!--  #endif -->
           </u-form-item>
+
+          <u-form-item prop="userInfo.code" borderBottom ref="item1">
+            <!-- #ifdef H5 -->
+            <u--input v-model="modl1.userInfo.code" border="none" placeholder="这里输入验证码">
+              <template slot="suffix" v-if="codeData.c">
+                <view @click="getCode" class="box-code" v-html="codeData.c.data"></view>
+              </template>
+            </u--input>
+            <!--  #endif -->
+            <!--  #ifdef  MP-WEIXIN -->
+            <u-input v-model="modl1.userInfo.code" border="none" placeholder="这里输入验证码">
+              <template slot="suffix" v-if="codeData.c">
+                <view @click="getCode" class="box-code" v-html="codeData.c.data"></view>
+              </template>
+            </u-input>
+            <!--  #endif -->
+          </u-form-item>
         </u--form>
         <view
           class="box-button"
@@ -78,7 +95,7 @@
 <script>
 import Nav from '@common/nav.vue'
 import Logo from '@common/logo.vue'
-import { register } from '@/api/index.js'
+import { register, getInfoCode } from '@/api/index.js'
 
 export default {
   components: {
@@ -93,7 +110,8 @@ export default {
         userInfo: {
           nickname: '',
           user_name: '',
-          password: ''
+          password: '',
+          code: ''
         }
       },
       rules: {
@@ -137,10 +155,28 @@ export default {
             message: '密码在6-12个字符之间',
             trigger: ['blur', 'change']
           }
+        ],
+        'userInfo.code': [
+          {
+            required: true,
+            message: '请填写验证码',
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: (rule, value, callback) => {
+              return uni.$u.test.contains(value, this.codeData.c.text)
+            },
+            message: '请输入正确的验证码',
+            trigger: ['blur', 'change']
+          }
         ]
       },
-      showPwt: true
+      showPwt: true,
+      codeData: {}
     }
+  },
+  onLoad() {
+    this.getCode()
   },
   computed: {
     CshowBtnColor() {
@@ -159,18 +195,27 @@ export default {
     toBack() {
       this.toBackPage()
     },
+    async getCode() {
+      this.codeData = await getInfoCode()
+      console.log(this.codeData.c.text)
+    },
     btnRegister() {
       this.$refs.form1
         .validate()
         .then(async (res) => {
-          const pamams = this.model1.userInfo
+          const pamams = this.modl1.userInfo
           await register(pamams)
           uni.$u.toast('注册成功')
-          this.$refs.form1.resetFields()
-          this.toBackPage()
+          setTimeout(() => {
+            this.toBackPage()
+          }, 1500)
         })
         .catch((errors) => {
-          uni.$u.toast('注册失败')
+          if (Object.prototype.toString.call(errors).split(' ')[1].split(']')[0] === 'Array') {
+            uni.$u.toast('注册失败')
+          } else {
+            uni.$u.toast(errors.data.message)
+          }
         })
     }
   }
@@ -193,7 +238,6 @@ export default {
       text-align: center;
       line-height: 100rpx;
       color: #fff;
-      // background-color: #d4d4d6;
     }
   }
 }

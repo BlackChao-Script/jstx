@@ -1,10 +1,10 @@
 {
   "pages": [
     {
-      "path": "pages/minikol/register/index"
+      "path": "pages/minikol/login/index"
     },
     {
-      "path": "pages/minikol/login/index"
+      "path": "pages/minikol/register/index"
     },
     {
       "path": "pages/minikol/index/index"
