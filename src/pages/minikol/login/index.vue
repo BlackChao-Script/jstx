@@ -11,17 +11,18 @@
       <view class="box_message">您好，欢迎来到 jstx ！</view>
       <view style="margin-top: 30rpx">
         <u--form :model="model1" :rules="rules" ref="form1">
-          <u-form-item prop="userInfo.name" borderBottom ref="item1">
+          <u-form-item prop="userInfo.user_name" borderBottom ref="item1">
             <u--input
-              v-model="model1.userInfo.name"
+              v-model="model1.userInfo.user_name"
+              type="number"
               border="none"
               placeholder="这里输入账号"
             ></u--input>
           </u-form-item>
-          <u-form-item prop="userInfo.pwd" borderBottom ref="item1">
+          <u-form-item prop="userInfo.password" borderBottom ref="item1">
             <!-- #ifdef H5 -->
             <u--input
-              v-model="model1.userInfo.pwd"
+              v-model="model1.userInfo.password"
               :password="showPwt"
               border="none"
               placeholder="这里输入密码"
@@ -38,7 +39,7 @@
             <!--  #endif -->
             <!--  #ifdef  MP-WEIXIN -->
             <u-input
-              v-model="model1.userInfo.pwd"
+              v-model="model1.userInfo.password"
               :password="showPwt"
               border="none"
               placeholder="这里输入密码"
@@ -55,7 +56,12 @@
             <!--  #endif -->
           </u-form-item>
         </u--form>
-        <view class="box-button">登录</view>
+        <view
+          class="box-button"
+          :style="{ backgroundColor: CshowBtnColor == true ? '#ffe431' : '#d4d4d6' }"
+          @click="clickLogin"
+          >登录</view
+        >
       </view>
     </view>
   </view>
@@ -64,6 +70,7 @@
 <script>
 import Nav from '@common/nav.vue'
 import Logo from '@common/logo.vue'
+import { login } from '@/api/index.js'
 
 export default {
   components: {
@@ -75,26 +82,72 @@ export default {
       errImg: require('@/assets/img/错.png'),
       model1: {
         userInfo: {
-          name: '',
-          pwd: ''
+          user_name: '',
+          password: ''
         }
       },
       rules: {
-        'userInfo.name': {
-          type: 'string',
-          required: true,
-          message: '请填写账号',
-          trigger: ['blur', 'change']
-        }
+        'userInfo.user_name': [
+          {
+            required: true,
+            message: '请输入账号',
+            trigger: ['blur', 'change']
+          },
+          {
+            min: 4,
+            max: 10,
+            message: '账号在4-10个字符之间',
+            trigger: ['blur', 'change']
+          }
+        ],
+        'userInfo.password': [
+          {
+            required: true,
+            message: '请输入密码',
+            trigger: ['blur', 'change']
+          },
+          {
+            min: 6,
+            max: 12,
+            message: '密码在6-12个字符之间',
+            trigger: ['blur', 'change']
+          }
+        ]
       },
       suffixIcon: 'eye-fill',
       suffixIcon: 'eye-fill',
       showPwt: true
     }
   },
+  computed: {
+    CshowBtnColor() {
+      if (this.model1.userInfo.user_name.length && this.model1.userInfo.password.length !== 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
     toRegister() {
       this.toNextPage('/pages/minikol/register/index')
+    },
+    clickLogin() {
+      this.$refs.form1
+        .validate()
+        .then(async (res) => {
+          const { token } = await login(this.model1.userInfo)
+          this.$store.commit('updateToken', token)
+          // console.log(this.$store.state.token)
+          uni.$u.toast('登录成功')
+        })
+        .catch((err) => {
+          if (Object.prototype.toString.call(err).split(' ')[1].split(']')[0] === 'Array') {
+            uni.$u.toast('登录失败')
+          } else {
+            uni.$u.toast(err.data.message)
+          }
+        })
     }
   }
 }
@@ -120,7 +173,6 @@ export default {
       text-align: center;
       line-height: 100rpx;
       color: #fff;
-      background-color: #d4d4d6;
     }
   }
 }

@@ -183,7 +183,8 @@ export default {
       if (
         this.modl1.userInfo.nickname.length &&
         this.modl1.userInfo.user_name.length &&
-        this.modl1.userInfo.password.length !== 0
+        this.modl1.userInfo.password.length &&
+        this.modl1.userInfo.code.length !== 0
       ) {
         return true
       } else {
@@ -197,7 +198,6 @@ export default {
     },
     async getCode() {
       this.codeData = await getInfoCode()
-      console.log(this.codeData.c.text)
     },
     btnRegister() {
       this.$refs.form1
