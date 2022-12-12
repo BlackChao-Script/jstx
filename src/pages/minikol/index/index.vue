@@ -52,7 +52,7 @@
 export default {
   data() {
     return {
-      src: 'https://cdn.uviewui.com/uview/album/5.jpg', // 用户头像
+      src: 'aa', // 用户头像
       titleImg: require('@/assets/img/火.png'), // 标题图片
       iconImg: {
         icon_search: require('@/assets/img/search.png'),

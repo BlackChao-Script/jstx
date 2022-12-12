@@ -131,6 +131,7 @@ export default {
   methods: {
     toRegister() {
       this.toNextPage('/pages/minikol/register/index')
+      this.$refs.form1.resetFields()
     },
     clickLogin() {
       this.$refs.form1
@@ -138,8 +139,9 @@ export default {
         .then(async (res) => {
           const { token } = await login(this.model1.userInfo)
           this.$store.commit('updateToken', token)
-          // console.log(this.$store.state.token)
           uni.$u.toast('登录成功')
+          this.toNextPage('/pages/minikol/index/index', { type: 'switchTab' })
+          this.$refs.form1.resetFields()
         })
         .catch((err) => {
           if (Object.prototype.toString.call(err).split(' ')[1].split(']')[0] === 'Array') {
