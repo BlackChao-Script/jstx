@@ -16,12 +16,12 @@
       <view class="content-username">用户</view>
       <view class="content-userlist" v-for="(item, index) in resObj.user" :key="index">
         <view class="userlist-img">
-          <u-avatar :src="src" shape="square" size="90"></u-avatar>
+          <u-avatar :src="item.avatar" shape="square" size="90"></u-avatar>
         </view>
         <view class="userlist-text">{{ item.nickname }}</view>
         <view class="userlist-btn">
           <!-- <view class="btn">发消息</view> -->
-          <view class="btna">加好友</view>
+          <view class="btna" @click="spanAddUser(item.id)">加好友</view>
         </view>
       </view>
       <u-empty
@@ -35,7 +35,7 @@
       <view class="content-username">群组</view>
       <view class="content-userlist" v-for="(item, index) in resObj.group" :key="item.group_name">
         <view class="userlist-img">
-          <u-avatar :src="src" shape="square" size="90"></u-avatar>
+          <u-avatar :src="item.group_cover" shape="square" size="90"></u-avatar>
         </view>
         <view class="userlist-text">{{ item.group_name }}</view>
         <view class="userlist-btn">
@@ -61,6 +61,8 @@
       iconColor="#ffe431"
     >
     </u-empty>
+
+    <u-toast ref="uToast"></u-toast>
   </view>
 </template>
 
@@ -70,7 +72,6 @@ import { search } from '@/api/index.js'
 export default {
   data() {
     return {
-      src: 'https://cdn.uviewui.com/uview/album/5.jpg', // 用户头像
       userKeyword: '',
       showSearchContent: false,
       showEmpty: false,
@@ -89,7 +90,7 @@ export default {
       }
       const res = await search({ data })
       this.resObj = res.resObj
-      console.log(this.resObj)
+      // console.log(this.resObj)
       if (this.resObj.group.length == 0 && this.resObj.user.length == 0) {
         this.showEmpty = true
         this.showSearchContent = false
@@ -97,6 +98,17 @@ export default {
         this.showEmpty = false
         this.showSearchContent = true
       }
+    },
+    async spanAddUser(friend_id) {
+      const user_id = this.$store.state.id
+      if (friend_id === user_id) {
+        this.$refs.uToast.show({
+          type: 'default',
+          message: '不能添加自己哦！'
+        })
+        return
+      }
+      this.toNextPage('/pages/minikol/user/adduser')
     }
   }
 }

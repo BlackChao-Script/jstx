@@ -137,8 +137,10 @@ export default {
       this.$refs.form1
         .validate()
         .then(async (res) => {
-          const { token } = await login(this.model1.userInfo)
+          const { token, id } = await login(this.model1.userInfo)
           this.$store.commit('updateToken', token)
+          this.$store.commit('updateId', id)
+          console.log(this.$store.state.id)
           uni.$u.toast('登录成功')
           this.toNextPage('/pages/minikol/index/index', { type: 'switchTab' })
           this.$refs.form1.resetFields()

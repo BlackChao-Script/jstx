@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
+    'id':'',
     'token': ''
   },
   mutations: {
@@ -13,12 +14,18 @@ const store = new Vuex.Store({
     },
     remdateToken(state) {
       state.token = ''
+    },
+    updateId(state, str) {
+      state.id = str
+    },
+    remdateId(state) {
+      state.id = ''
     }
   },
   plugins: [
     createPersistedState({
       key: 'app_config_data', // 状态保存到本地的 key
-      paths: ['token'],
+      paths: ['token','id'],
       storage: {
         // 存储方式定义
         getItem: (key) => uni.getStorageSync(key), // 获取
