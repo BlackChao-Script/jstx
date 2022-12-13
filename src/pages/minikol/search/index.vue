@@ -2,48 +2,101 @@
   <view class="search">
     <view class="search-header">
       <view class="header-search">
-        <u--input suffixIcon="search" suffixIconStyle="font-size: 50rpx"></u--input>
+        <u-search
+          height="60"
+          placeholder="请输入想搜索的内容"
+          v-model="userKeyword"
+          :showAction="false"
+          @search="searchUser"
+        ></u-search>
       </view>
       <view class="header-text" @click="toBack">取消</view>
     </view>
-    <view class="search-content">
+    <view class="search-content" v-if="showSearchContent">
       <view class="content-username">用户</view>
-      <view class="content-userlist" v-for="(item, index) in 5" :key="index">
+      <view class="content-userlist" v-for="(item, index) in resObj.user" :key="index">
         <view class="userlist-img">
           <u-avatar :src="src" shape="square" size="90"></u-avatar>
         </view>
-        <view class="userlist-text">撒大苏打</view>
+        <view class="userlist-text">{{ item.nickname }}</view>
         <view class="userlist-btn">
           <!-- <view class="btn">发消息</view> -->
           <view class="btna">加好友</view>
         </view>
       </view>
+      <u-empty
+        v-if="resObj.user.length == 0"
+        mode="search"
+        textSize="30"
+        iconSize="100"
+        iconColor="#ffe431"
+      >
+      </u-empty>
       <view class="content-username">群组</view>
-      <view class="content-userlist">
+      <view class="content-userlist" v-for="(item, index) in resObj.group" :key="item.group_name">
         <view class="userlist-img">
           <u-avatar :src="src" shape="square" size="90"></u-avatar>
         </view>
-        <view class="userlist-text">撒大苏打</view>
+        <view class="userlist-text">{{ item.group_name }}</view>
         <view class="userlist-btn">
           <!-- <view class="btn">发消息</view> -->
-          <view class="btna">加好友</view>
+          <view class="btna">加群聊</view>
         </view>
       </view>
+      <u-empty
+        v-if="resObj.group.length == 0"
+        mode="search"
+        textSize="30"
+        iconSize="100"
+        iconColor="#ffe431"
+      >
+      </u-empty>
     </view>
+    <u-empty
+      style="margin-top: 450rpx"
+      v-if="showEmpty"
+      mode="search"
+      textSize="30"
+      iconSize="100"
+      iconColor="#ffe431"
+    >
+    </u-empty>
   </view>
 </template>
 
 <script>
+import { search } from '@/api/index.js'
+
 export default {
   data() {
     return {
-      src: 'https://cdn.uviewui.com/uview/album/5.jpg' // 用户头像
+      src: 'https://cdn.uviewui.com/uview/album/5.jpg', // 用户头像
+      userKeyword: '',
+      showSearchContent: false,
+      showEmpty: false,
+      resObj: {}
     }
   },
 
   methods: {
     toBack() {
+      this.userKeyword = ''
       this.toBackPage()
+    },
+    async searchUser() {
+      const data = {
+        userKeyword: this.userKeyword
+      }
+      const res = await search({ data })
+      this.resObj = res.resObj
+      console.log(this.resObj)
+      if (this.resObj.group.length == 0 && this.resObj.user.length == 0) {
+        this.showEmpty = true
+        this.showSearchContent = false
+      } else {
+        this.showEmpty = false
+        this.showSearchContent = true
+      }
     }
   }
 }
@@ -56,6 +109,7 @@ export default {
     align-items: center;
     .header-search {
       flex: 1;
+      margin-top: 10rpx;
       margin-left: 20rpx;
     }
     .header-text {
@@ -67,7 +121,7 @@ export default {
   .search-content {
     margin: 20rpx;
     .content-username {
-      font-size: 45rpx;
+      font-size: 40rpx;
       font-weight: 600;
       margin: 10rpx 0;
     }
@@ -81,6 +135,7 @@ export default {
       }
       .userlist-text {
         flex: 1;
+        font-size: 35rpx;
         display: flex;
         align-items: center;
         overflow: hidden; //超出的文本隐藏
