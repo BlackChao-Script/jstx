@@ -108,7 +108,12 @@ export default {
         })
         return
       }
-      this.toNextPage('/pages/minikol/user/adduser')
+      this.$u.route({
+        url: '/pages/minikol/user/adduser',
+        params: {
+          user_id: friend_id
+        }
+      })
     }
   }
 }

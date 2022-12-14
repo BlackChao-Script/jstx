@@ -29,6 +29,19 @@
     </view>
     <!-- userList -->
     <view class="content-list">
+      <view class="list-box">
+        <view class="box-img box-img-user">
+          <u-avatar icon="man-add" shape="square" fontSize="46" size="80" bg-color="#ffe431"></u-avatar>
+          <view class="box-badge">
+            <u-badge max="99" value="2"></u-badge>
+          </view>
+        </view>
+        <view class="box-content">
+          <view class="content-title">好友请求</view>
+          <view class="content-text">你的新朋友来了</view>
+        </view>
+        <view class="box-time">上午7:45</view>
+      </view>
       <view class="list-box" v-for="(item, index) in 20" :key="index" @click="toChitchat">
         <view class="box-img">
           <u-avatar :src="src" shape="square" size="80"></u-avatar>
@@ -60,8 +73,7 @@ export default {
       } // 图标
     }
   },
-  onLoad(options) {
-  },
+  onLoad(options) {},
   methods: {
     goSearch() {
       this.toNextPage('/pages/minikol/search/index')

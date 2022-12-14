@@ -8,6 +8,8 @@ export const register = (params, config = {}) => http.post('/user/register', par
 export const getInfoCode = (params, config = {}) => http.get('/user/getInfoCode', params, config)
 // 获取邮箱验证码
 export const getCmailCode = (data, config = {}) => http.get('/user/getCode', data, config)
+// 获取用户信息
+export const getUserInfo = (data, config = {}) => http.get('/user/getUserInfo', data, config)
 
 // 搜索
 export const search = (data, config = {}) => http.get('/search', data, config)

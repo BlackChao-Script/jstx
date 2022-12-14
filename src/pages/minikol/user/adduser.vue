@@ -15,15 +15,21 @@
     <view class="adduser-topbox"></view>
     <view class="adduser-box">
       <view class="box">
-        <view class="box-userimg" :style="{ backgroundImage: `url(${userImg})` }"> </view>
+        <view
+          class="box-userimg"
+          v-if="userData.avatar == ''"
+          :style="{ backgroundImage: `url(${userData.avatar})` }"
+        >
+        </view>
+        <view class="box-userimg" v-else :style="{ backgroundImage: `url(${userImg})` }"> </view>
       </view>
-      <view class="box-username">春暖花开</view>
+      <view class="box-username">{{ userData.nickname }}</view>
       <view class="box-messageBoard">
-        <textarea v-model="value1" placeholder="请输入内容"></textarea
-      ></view>
+        <textarea v-model="value1" placeholder="请输入内容"></textarea>
+      </view>
       <view class="box-btn">
         <view class="btn-a" @click="toBack">取消</view>
-        <view class="btn-b">发送</view>
+        <view class="btn-b" @click="sendRequest">发送</view>
       </view>
     </view>
   </view>
@@ -31,21 +37,42 @@
 
 <script>
 import Nav from '@common/nav.vue'
+import { getUserInfo, addFriend } from '@/api/index.js'
 export default {
-  components: {
-    Nav
-  },
   data() {
     return {
       leftImg: require('@/assets/img/向左.png'),
       moImg: require('@/assets/img/更多.png'),
-      userImg: 'https://cdn.uviewui.com/uview/album/5.jpg',
-      value1: ''
+      userImg: require('@/assets/img/用户.png'),
+      value1: '',
+      userData: {},
+      friend_id: ''
     }
+  },
+  components: {
+    Nav
+  },
+  async onLoad(op) {
+    const data = {
+      user_id: op.user_id
+    }
+    this.friend_id = op.user_id
+    this.userData = await getUserInfo({ data })
   },
   methods: {
     toBack() {
       this.toBackPage()
+    },
+    async sendRequest() {
+      const params = {
+        user_id: this.$store.state.id,
+        friend_id: this.friend_id * 1
+      }
+      await addFriend(params)
+      uni.$u.toast('好友申请已发送')
+      setTimeout(() => {
+        this.toNextPage('/pages/minikol/search/index')
+      }, 1500)
     }
   }
 }
@@ -78,9 +105,9 @@ export default {
         left: 50rpx;
         width: 200rpx;
         height: 200rpx;
-        background-color: aqua;
         border-radius: 50%;
         border: 7rpx solid #ffff;
+        background-color: #fff;
         background-position: center center;
         background-size: cover;
       }
