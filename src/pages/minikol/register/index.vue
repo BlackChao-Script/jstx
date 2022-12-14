@@ -11,7 +11,7 @@
     <view class="register-box">
       <view class="box-title">注册</view>
       <view style="margin-top: 30rpx">
-        <u--form :model="modl1" :rules="rules" ref="form1">
+        <u--form :model="modl1" ref="form1">
           <u-form-item prop="userInfo.nickname" borderBottom ref="item1">
             <u--input
               v-model="modl1.userInfo.nickname"
@@ -36,48 +36,58 @@
               placeholder="这里输入密码"
               suffixIconStyle="font-size: 40rpx;"
             >
-              <template slot="suffix">
-                <u-icon
-                  size="40"
-                  :name="showPwt == true ? 'eye-fill' : 'eye-off'"
-                  @click="() => (showPwt = !showPwt)"
-                ></u-icon>
-              </template>
+              <!--  #endif -->
+              <!--  #ifdef  MP-WEIXIN -->
+              <u-input
+                v-model="modl1.userInfo.password"
+                :password="showPwt"
+                border="none"
+                placeholder="这里输入密码"
+                suffixIconStyle="font-size: 40rpx;"
+              >
+                <!--  #endif -->
+                <template slot="suffix">
+                  <u-icon
+                    size="40"
+                    :name="showPwt == true ? 'eye-fill' : 'eye-off'"
+                    @click="() => (showPwt = !showPwt)"
+                  ></u-icon>
+                </template>
+                <!--  #ifdef  MP-WEIXIN -->
+              </u-input>
+              <!--  #endif -->
+              <!-- #ifdef H5 -->
             </u--input>
             <!--  #endif -->
-            <!--  #ifdef  MP-WEIXIN -->
-            <u-input
-              v-model="modl1.userInfo.password"
-              :password="showPwt"
-              border="none"
-              placeholder="这里输入密码"
-              suffixIconStyle="font-size: 40rpx;"
-            >
-              <template slot="suffix">
-                <u-icon
-                  size="40"
-                  :name="showPwt == true ? 'eye-fill' : 'eye-off'"
-                  @click="() => (showPwt = !showPwt)"
-                ></u-icon>
-              </template>
-            </u-input>
-            <!--  #endif -->
           </u-form-item>
-
+          <u-form-item prop="userInfo.mail" borderBottom ref="item1">
+            <u--input
+              v-model="modl1.userInfo.mail"
+              border="none"
+              placeholder="请输入邮箱"
+            ></u--input>
+          </u-form-item>
           <u-form-item prop="userInfo.code" borderBottom ref="item1">
             <!-- #ifdef H5 -->
             <u--input v-model="modl1.userInfo.code" border="none" placeholder="这里输入验证码">
-              <template slot="suffix" v-if="codeData.c">
-                <view @click="getCode" class="box-code" v-html="codeData.c.data"></view>
-              </template>
+              <!--  #endif -->
+              <!--  #ifdef  MP-WEIXIN -->
+              <u-input v-model="modl1.userInfo.code" border="none" placeholder="这里输入验证码">
+                <!--  #endif -->
+                <template slot="suffix">
+                  <u-code
+                    ref="uCode"
+                    @change="codeChange"
+                    seconds="60"
+                    changeText="X秒重新获取哈哈哈"
+                  ></u-code>
+                  <u-button @click="getCodes" :text="tips" color="#ffe431" size="mini"></u-button>
+                </template>
+                <!--  #ifdef  MP-WEIXIN -->
+              </u-input>
+              <!--  #endif -->
+              <!-- #ifdef H5 -->
             </u--input>
-            <!--  #endif -->
-            <!--  #ifdef  MP-WEIXIN -->
-            <u-input v-model="modl1.userInfo.code" border="none" placeholder="这里输入验证码">
-              <template slot="suffix" v-if="codeData.c">
-                <view @click="getCode" class="box-code" v-html="codeData.c.data"></view>
-              </template>
-            </u-input>
             <!--  #endif -->
           </u-form-item>
         </u--form>
@@ -95,7 +105,7 @@
 <script>
 import Nav from '@common/nav.vue'
 import Logo from '@common/logo.vue'
-import { register, getInfoCode } from '@/api/index.js'
+import { register, getInfoCode, getCmailCode } from '@/api/index.js'
 
 export default {
   components: {
@@ -111,6 +121,7 @@ export default {
           nickname: '',
           user_name: '',
           password: '',
+          mail: '',
           code: ''
         }
       },
@@ -156,6 +167,20 @@ export default {
             trigger: ['blur', 'change']
           }
         ],
+        'userInfo.mail': [
+          {
+            required: true,
+            message: '请填写邮箱',
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: (rule, value, callback) => {
+              return uni.$u.test.email(value)
+            },
+            message: '请输入正确的邮箱',
+            trigger: ['blur', 'change']
+          }
+        ],
         'userInfo.code': [
           {
             required: true,
@@ -164,19 +189,21 @@ export default {
           },
           {
             validator: (rule, value, callback) => {
-              return uni.$u.test.contains(value, this.codeData.c.text)
+              return uni.$u.test.contains(value, this.codeData)
             },
             message: '请输入正确的验证码',
-            trigger: ['blur', 'change']
+            trigger: ['blur']
           }
         ]
       },
       showPwt: true,
-      codeData: {}
+      codeData: '',
+      tips: ''
     }
   },
-  onLoad() {
-    this.getCode()
+  onLoad() {},
+  onReady() {
+    this.$refs.form1.setRules(this.rules)
   },
   computed: {
     CshowBtnColor() {
@@ -184,7 +211,8 @@ export default {
         this.modl1.userInfo.nickname.length &&
         this.modl1.userInfo.user_name.length &&
         this.modl1.userInfo.password.length &&
-        this.modl1.userInfo.code.length !== 0
+        this.modl1.userInfo.code.length &&
+        this.modl1.userInfo.mail.length !== 0
       ) {
         return true
       } else {
@@ -196,8 +224,32 @@ export default {
     toBack() {
       this.toBackPage()
     },
-    async getCode() {
-      this.codeData = await getInfoCode()
+    codeChange(text) {
+      this.tips = text
+    },
+    async getCodes() {
+      if (uni.$u.test.email(this.modl1.userInfo.mail) === false) {
+        uni.$u.toast('请先填写邮箱信息或者邮箱格式不正确')
+        return
+      }
+      if (this.$refs.uCode.canGetCode) {
+        uni.showLoading({
+          title: '正在获取验证码'
+        })
+        const data = {
+          mail: this.modl1.userInfo.mail
+        }
+        try {
+          this.codeData = await getCmailCode({ data })
+          uni.hideLoading()
+          uni.$u.toast('验证码已发送')
+          this.$refs.uCode.start()
+        } catch (err) {
+          uni.$u.toast('验证码发送失败')
+        }
+      } else {
+        uni.$u.toast('倒计时结束后再发送')
+      }
     },
     btnRegister() {
       this.$refs.form1
