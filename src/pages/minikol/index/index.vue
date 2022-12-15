@@ -3,7 +3,7 @@
     <!-- nav -->
     <view class="content-nav">
       <view class="nav-userImg" @click="toUser">
-        <u-avatar :src="src" shape="square" size="60"></u-avatar>
+        <u-avatar :src="user_src" shape="square" size="60"></u-avatar>
       </view>
       <view class="nav-title">
         <u--image :src="titleImg" width="100rpx" height="50rpx" mode="widthFix"></u--image>
@@ -50,7 +50,7 @@
       </view>
       <view class="list-box" v-for="(item, index) in 20" :key="index" @click="toChitchat">
         <view class="box-img">
-          <u-avatar :src="src" shape="square" size="80"></u-avatar>
+          <u-avatar src="aa" shape="square" size="80"></u-avatar>
           <view class="box-badge">
             <u-badge max="99" value="2"></u-badge>
           </view>
@@ -68,10 +68,12 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api/index'
+
 export default {
   data() {
     return {
-      src: 'aa', // 用户头像
+      user_src: 'aa', // 用户头像
       titleImg: require('@/assets/img/火.png'), // 标题图片
       iconImg: {
         icon_search: require('@/assets/img/search.png'),
@@ -79,13 +81,19 @@ export default {
       } // 图标
     }
   },
-  onLoad(options) {},
+  async onLoad() {
+    const data = {
+      user_id: this.$store.state.id
+    }
+    const { avatar } = await getUserInfo({ data })
+    this.user_src = avatar
+  },
   methods: {
     goSearch() {
       this.toNextPage('/pages/minikol/search/index')
     },
     toUser() {
-      // this.toNextPage('/pages/minikol/user/index')
+      this.toNextPage('/pages/minikol/my/index')
     },
     toAddGroup() {
       this.toNextPage('/pages/minikol/group/creatgroup')

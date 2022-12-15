@@ -38,6 +38,9 @@
     },
     {
       "path": "pages/minikol/phone/voiceCalls"
+    },
+    {
+      "path": "pages/minikol/addressbook/index"
     }
   ],
 
@@ -66,10 +69,10 @@
         "text": "聊天"
       },
       {
-        "pagePath": "pages/minikol/my/index",
+        "pagePath": "pages/minikol/addressbook/index",
         "iconPath": "static/image/my_s.png",
         "selectedIconPath": "static/image/my.png",
-        "text": "我的"
+        "text": "通讯录"
       }
     ]
   }

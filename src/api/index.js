@@ -10,6 +10,10 @@ export const getInfoCode = (params, config = {}) => http.get('/user/getInfoCode'
 export const getCmailCode = (data, config = {}) => http.get('/user/getCode', data, config)
 // 获取用户信息
 export const getUserInfo = (data, config = {}) => http.get('/user/getUserInfo', data, config)
+// 修改用户信息
+export const modifyUser = (user_id, params, config = {}) => {
+  http.put(`/user/modify/${user_id}`, params, config)
+}
 
 // 搜索
 export const search = (data, config = {}) => http.get('/search', data, config)
@@ -17,4 +21,5 @@ export const search = (data, config = {}) => http.get('/search', data, config)
 // 添加好友
 export const addFriend = (params, config = {}) => http.post('/friend/addfriend', params, config)
 // 获取好友申请列表
-export const getFriendApply = (data, config = {}) => http.get('/friend/getFriendApply', data, config)
+export const getFriendApply = (data, config = {}) =>
+  http.get('/friend/getFriendApply', data, config)

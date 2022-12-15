@@ -2,30 +2,23 @@
   <view class="user">
     <view class="user-bg">
       <view class="bg-bai"></view>
-      <image :src="userImgbgc" class="bg-img" mode="aspectFill"></image>
+      <image :src="userData.avatar" class="bg-img" mode="aspectFill"></image>
     </view>
     <view class="user-box">
-      <view
-        class="box-img"
-        v-if="userData.avatar !== ''"
-        :style="{ backgroundImage: `url(${userData.avatar})` }"
-      >
-        <view class="img-sexIcon" :style="{ backgroundColor: sex == '男' ? '#ffe431' : '#ff5d5b' }">
-          <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>
-        </view>
-      </view>
-      <view class="box-img" v-else :style="{ backgroundImage: `url(${userImg})` }">
-        <view class="img-sexIcon" :style="{ backgroundColor: sex == '男' ? '#ffe431' : '#ff5d5b' }">
+      <view class="box-img" :style="{ backgroundImage: `url(${userData.avatar})` }">
+        <view
+          class="img-sexIcon"
+          v-if="userData.sex == ''"
+          :style="{ backgroundColor: userData.sex == '男' ? '#ffe431' : '#ff5d5b' }"
+        >
           <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>
         </view>
       </view>
       <view class="box-title">
-        <view class="title-name">老王</view>
-        <view class="title-namea">昵称：春暖花开</view>
+        <view class="title-name">{{ userData.user_name }}</view>
+        <view class="title-namea">昵称：{{ userData.nickname }}</view>
       </view>
-      <view class="box-text"
-        >夜，结束了一天的喧嚣后安静下来，伴随着远处路灯那微弱的光。风，毫无预兆地席卷整片旷野，撩动人的思绪万千。</view
-      >
+      <view class="box-text">{{ userData.signature }}</view>
       <view class="box-btn" @click="addUser">加为好友</view>
     </view>
   </view>
@@ -37,8 +30,6 @@ import { getUserInfo } from '@/api/index.js'
 export default {
   data() {
     return {
-      userImgbgc: 'https://cdn.uviewui.com/uview/album/5.jpg',
-      userImg: require('@/assets/img/用户.png'),
       nanImg: require('@/assets/img/男.png'),
       nvImg: require('@/assets/img/女.png'),
       sex: '男',
@@ -78,7 +69,7 @@ export default {
     height: 100%;
     z-index: -999;
     .bg-img {
-      opacity: 0.4;
+      opacity: 0.5;
       width: 100%;
       height: 100%;
       filter: blur(5rpx);
