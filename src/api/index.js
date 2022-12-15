@@ -16,3 +16,5 @@ export const search = (data, config = {}) => http.get('/search', data, config)
 
 // 添加好友
 export const addFriend = (params, config = {}) => http.post('/friend/addfriend', params, config)
+// 获取好友申请列表
+export const getFriendApply = (data, config = {}) => http.get('/friend/getFriendApply', data, config)

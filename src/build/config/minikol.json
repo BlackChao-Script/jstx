@@ -4,13 +4,16 @@
       "path": "pages/minikol/login/index"
     },
     {
+      "path": "pages/minikol/index/index"
+    },
+    {
+      "path": "pages/minikol/user/friend"
+    },
+    {
       "path": "pages/minikol/search/index"
     },
     {
       "path": "pages/minikol/register/index"
-    },
-    {
-      "path": "pages/minikol/index/index"
     },
     {
       "path": "pages/minikol/chitchat/index"

@@ -1,21 +1,20 @@
 <template>
   <view class="user">
-    <Nav>
-      <template v-slot:left>
-        <view @click="toBack"
-          ><u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image
-        ></view>
-      </template>
-      <template v-slot:right>
-        <u--image :src="moImg" width="50rpx" height="50rpx" mode="widthFix"></u--image>
-      </template>
-    </Nav>
     <view class="user-bg">
       <view class="bg-bai"></view>
-      <image :src="userImg" class="bg-img" mode="aspectFill"></image>
+      <image :src="userImgbgc" class="bg-img" mode="aspectFill"></image>
     </view>
     <view class="user-box">
-      <view class="box-img" :style="{ backgroundImage: `url(${userImg})` }">
+      <view
+        class="box-img"
+        v-if="userData.avatar !== ''"
+        :style="{ backgroundImage: `url(${userData.avatar})` }"
+      >
+        <view class="img-sexIcon" :style="{ backgroundColor: sex == '男' ? '#ffe431' : '#ff5d5b' }">
+          <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>
+        </view>
+      </view>
+      <view class="box-img" v-else :style="{ backgroundImage: `url(${userImg})` }">
         <view class="img-sexIcon" :style="{ backgroundColor: sex == '男' ? '#ffe431' : '#ff5d5b' }">
           <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>
         </view>
@@ -33,28 +32,36 @@
 </template>
 
 <script>
-import Nav from '@common/nav.vue'
+import { getUserInfo } from '@/api/index.js'
 
 export default {
-  components: {
-    Nav
-  },
   data() {
     return {
-      leftImg: require('@/assets/img/向左.png'),
-      moImg: require('@/assets/img/更多.png'),
-      userImg: 'https://cdn.uviewui.com/uview/album/5.jpg',
+      userImgbgc: 'https://cdn.uviewui.com/uview/album/5.jpg',
+      userImg: require('@/assets/img/用户.png'),
       nanImg: require('@/assets/img/男.png'),
       nvImg: require('@/assets/img/女.png'),
-      sex: '男'
+      sex: '男',
+      friend_id: '',
+      userData: {}
     }
+  },
+  async onLoad(op) {
+    const data = {
+      user_id: op.user_id
+    }
+    this.friend_id = op.user_id
+    this.userData = await getUserInfo({ data })
+    console.log(this.userData)
   },
   methods: {
     addUser() {
-      this.toNextPage('/pages/minikol/user/adduser')
-    },
-    toBack() {
-      this.toBackPage()
+      this.$u.route({
+        url: '/pages/minikol/user/adduser',
+        params: {
+          user_id: this.friend_id
+        }
+      })
     }
   }
 }

@@ -109,7 +109,7 @@ export default {
         return
       }
       this.$u.route({
-        url: '/pages/minikol/user/adduser',
+        url: '/pages/minikol/user/index',
         params: {
           user_id: friend_id
         }

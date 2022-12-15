@@ -1,12 +1,5 @@
 <template>
   <view class="register">
-    <Nav>
-      <template v-slot:left>
-        <view @click="toBack"
-          ><u--image :src="leftImg" width="50rpx" height="50rpx" mode="widthFix"></u--image
-        ></view>
-      </template>
-    </Nav>
     <Logo></Logo>
     <view class="register-box">
       <view class="box-title">注册</view>
@@ -114,8 +107,6 @@ export default {
   },
   data() {
     return {
-      leftImg: require('@/assets/img/向左.png'),
-      errImg: require('@/assets/img/错.png'),
       modl1: {
         userInfo: {
           nickname: '',

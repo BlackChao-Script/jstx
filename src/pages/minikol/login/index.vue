@@ -1,10 +1,5 @@
 <template>
   <view class="register">
-    <Nav>
-      <template v-slot:right>
-        <view @click="toRegister">注册</view>
-      </template>
-    </Nav>
     <Logo></Logo>
     <view class="register-box">
       <view class="box-title">登录</view>
@@ -56,6 +51,9 @@
             <!--  #endif -->
           </u-form-item>
         </u--form>
+        <view class="box_text">
+          <u--text @click="toRegister" text="还没有账号？前往注册" color="#ffe431"></u--text>
+        </view>
         <view
           class="box-button"
           :style="{ backgroundColor: CshowBtnColor == true ? '#ffe431' : '#d4d4d6' }"
@@ -68,13 +66,11 @@
 </template>
 
 <script>
-import Nav from '@common/nav.vue'
 import Logo from '@common/logo.vue'
 import { login } from '@/api/index.js'
 
 export default {
   components: {
-    Nav,
     Logo
   },
   data() {
@@ -140,7 +136,6 @@ export default {
           const { token, id } = await login(this.model1.userInfo)
           this.$store.commit('updateToken', token)
           this.$store.commit('updateId', id)
-          console.log(this.$store.state.id)
           uni.$u.toast('登录成功')
           this.toNextPage('/pages/minikol/index/index', { type: 'switchTab' })
           this.$refs.form1.resetFields()
@@ -169,8 +164,12 @@ export default {
       margin-top: 20rpx;
       color: #96979c;
     }
+    .box_text {
+      margin-top: 30rpx;
+      width: 250rpx;
+    }
     .box-button {
-      margin: 150rpx auto;
+      margin: 90rpx auto;
       width: 500rpx;
       height: 100rpx;
       border-radius: 50rpx;

@@ -29,9 +29,15 @@
     </view>
     <!-- userList -->
     <view class="content-list">
-      <view class="list-box">
+      <view class="list-box" @click="toFriend">
         <view class="box-img box-img-user">
-          <u-avatar icon="man-add" shape="square" fontSize="46" size="80" bg-color="#ffe431"></u-avatar>
+          <u-avatar
+            icon="man-add"
+            shape="square"
+            fontSize="46"
+            size="80"
+            bg-color="#ffe431"
+          ></u-avatar>
           <view class="box-badge">
             <u-badge max="99" value="2"></u-badge>
           </view>
@@ -79,13 +85,16 @@ export default {
       this.toNextPage('/pages/minikol/search/index')
     },
     toUser() {
-      this.toNextPage('/pages/minikol/user/index')
+      // this.toNextPage('/pages/minikol/user/index')
     },
     toAddGroup() {
       this.toNextPage('/pages/minikol/group/creatgroup')
     },
     toChitchat() {
       this.toNextPage('/pages/minikol/chitchat/index')
+    },
+    toFriend() {
+      this.toNextPage('/pages/minikol/user/friend')
     }
   }
 }
