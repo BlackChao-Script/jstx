@@ -1,10 +1,10 @@
 <template>
   <view class="friend">
-    <view class="content-userlist" v-for="(item, index) in 4" :key="index">
+    <view class="content-userlist" v-for="(item, index) in friendApplyData" :key="index">
       <view class="userlist-img">
-        <u-avatar src="asdad" shape="square" size="90"></u-avatar>
+        <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
       </view>
-      <view class="userlist-text">asdassa</view>
+      <view class="userlist-text">{{item.friend_data.nickname}}</view>
       <view class="userlist-btn">
         <!-- <view class="btn">已添加</view> -->
         <view class="btna">接受</view>
@@ -27,7 +27,6 @@ export default {
       user_id: this.$store.state.id
     }
     this.friendApplyData = await getFriendApply({ data })
-    console.log(this.friendApplyData)
   },
   methods: {}
 }

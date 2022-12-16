@@ -29,7 +29,7 @@
     </view>
     <!-- userList -->
     <view class="content-list">
-      <view class="list-box" @click="toFriend">
+      <view class="list-box" @click="toFriend" v-if="friendApplyNum !== 0">
         <view class="box-img box-img-user">
           <u-avatar
             icon="man-add"
@@ -39,14 +39,14 @@
             bg-color="#ffe431"
           ></u-avatar>
           <view class="box-badge">
-            <u-badge max="99" value="2"></u-badge>
+            <u-badge max="99" :value="friendApplyNum"></u-badge>
           </view>
         </view>
         <view class="box-content">
           <view class="content-title">好友请求</view>
           <view class="content-text">你的新朋友来了</view>
         </view>
-        <view class="box-time">上午7:45</view>
+        <view class="box-time">{{ this.applicationTime }}</view>
       </view>
       <view class="list-box" v-for="(item, index) in 20" :key="index" @click="toChitchat">
         <view class="box-img">
@@ -68,27 +68,43 @@
 </template>
 
 <script>
-import { getUserInfo } from '@/api/index'
+import { getUserInfo, getFriendApply } from '@/api/index'
 
 export default {
   data() {
     return {
-      user_src: 'aa', // 用户头像
+      user_src: '', // 用户头像
       titleImg: require('@/assets/img/火.png'), // 标题图片
       iconImg: {
         icon_search: require('@/assets/img/search.png'),
         icon_addgroup: require('@/assets/img/add group.png')
-      } // 图标
+      }, // 图标
+      friendApplyNum: 0,
+      applicationTime: ''
     }
   },
-  async onLoad() {
-    const data = {
-      user_id: this.$store.state.id
-    }
-    const { avatar } = await getUserInfo({ data })
-    this.user_src = avatar
+  onLoad() {
+    this.getData()
   },
   methods: {
+    async getData() {
+      const data = {
+        user_id: this.$store.state.id
+      }
+      const { avatar } = await getUserInfo({ data })
+      console.log(avatar)
+      const res = await getFriendApply({ data })
+      if (res.length !== 0) {
+        for (let i of res) {
+          if (i.friend_state === 1) {
+            this.friendApplyNum++
+          }
+        }
+        this.applicationTime = this.dateTime(res[res.length - 1].application_time)
+      }
+
+      this.user_src = avatar
+    },
     goSearch() {
       this.toNextPage('/pages/minikol/search/index')
     },

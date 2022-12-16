@@ -8,7 +8,7 @@
       <view class="box-img" :style="{ backgroundImage: `url(${userData.avatar})` }">
         <view
           class="img-sexIcon"
-          v-if="userData.sex == ''"
+          v-if="userData.sex !== ''"
           :style="{ backgroundColor: userData.sex == '男' ? '#ffe431' : '#ff5d5b' }"
         >
           <image :src="sex == '男' ? nanImg : nvImg" class="sexIcon-img"></image>

@@ -1,10 +1,13 @@
 <template>
   <view class="my">
+    <!-- #ifdef H5 -->
     <u-cell-group :border="false">
-      <u-cell class="m">
+      <u-cell class="m" :isLink="true">
         <view slot="title" class="my-title">
           <view class="title-text">头像</view>
-          <u-avatar :src="userData.avatar" shape="square" size="100"></u-avatar>
+          <u-upload @afterRead="afterRead" :maxCount="1">
+            <u-avatar :src="userData.avatar" shape="square" size="100"></u-avatar
+          ></u-upload>
         </view>
       </u-cell>
       <u-cell class="m">
@@ -25,6 +28,13 @@
         </view>
       </u-cell>
     </u-cell-group>
+    <!--  #endif -->
+    <!--  #ifdef  MP-WEIXIN -->
+    <view class="my-list">
+      <view class="list-title">122</view>
+      <view class="list-content">2</view>
+    </view>
+    <!--  #endif -->
     <view class="my-from">
       <u--form labelPosition="left" :model="userData" ref="form1" labelWidth="50px">
         <u-form-item label="昵称" borderBottom ref="item1">
@@ -82,18 +92,20 @@ export default {
       ]
     }
   },
-  async onLoad() {
-    const data = {
-      user_id: this.$store.state.id
-    }
-    this.userData = await getUserInfo({ data })
-    this.userData.register_time = uni.$u.timeFormat(this.timestamp, 'yyyy-mm-dd hh:MM:ss');
-    console.log(this.userData.register_time)
+  onLoad() {
+    this.getData()
   },
 
   methods: {
     sexSelect(e) {
       this.userData.sex = e.name
+    },
+    async getData() {
+      const data = {
+        user_id: this.$store.state.id
+      }
+      this.userData = await getUserInfo({ data })
+      this.userData.register_time = uni.$u.timeFormat(this.timestamp, 'yyyy-mm-dd hh:MM:ss')
     },
     async modifyUserData() {
       const params = {
@@ -111,7 +123,21 @@ export default {
     clickNext() {
       this.$store.commit('remdateToken')
       this.$store.commit('remdateId')
-      this.toNextPage('/pages/minikol/login/index')
+      this.toNextPage('/pages/minikol/login/index', { type: 'reLaunch' })
+    },
+    afterRead(event) {
+      uni.uploadFile({
+        url: 'http://localhost:8080/upload',
+        filePath: event.file.url,
+        name: 'file',
+        success: async (uploadFileRes) => {
+          const params = {
+            avatar: uploadFileRes.data.split('{')[2].split('"')[3]
+          }
+          await modifyUser(this.$store.state.id, params)
+          this.getData()
+        }
+      })
     }
   }
 }
@@ -125,11 +151,14 @@ export default {
       display: flex;
       align-items: center;
       .title-text {
-        margin-left: -20rpx;
+        // margin-left: -20rpx;
         margin-right: 30rpx;
         font-size: 30rpx;
       }
     }
+  }
+  .my-list{
+    display: flex;
   }
   .my-next {
     width: 150rpx;

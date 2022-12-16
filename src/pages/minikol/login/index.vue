@@ -52,7 +52,7 @@
           </u-form-item>
         </u--form>
         <view class="box_text">
-          <u--text @click="toRegister" text="还没有账号？前往注册" color="#ffe431"></u--text>
+          <u--text @click="toRegister" text="还没有账号？前往注册" color="#ffe431" size="20"></u--text>
         </view>
         <view
           class="box-button"
