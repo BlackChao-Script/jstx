@@ -1,39 +1,102 @@
 <template>
   <view class="friend">
-    <view class="content-userlist" v-for="(item, index) in friendApplyData" :key="index">
+    <view class="content-title">最近</view>
+    <view class="content-userlist" v-for="item in recentlyData" :key="item.id">
       <view class="userlist-img">
         <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
       </view>
-      <view class="userlist-text">{{item.friend_data.nickname}}</view>
+      <view class="userlist-text">{{ item.friend_data.nickname }}</view>
       <view class="userlist-btn">
-        <!-- <view class="btn">已添加</view> -->
-        <view class="btna">接受</view>
+        <view class="btn" v-if="item.friend_state == 0">已接受</view>
+        <view class="btna" v-else @click="clickChangFriend(item.user_id)">接受</view>
+      </view>
+    </view>
+
+    <view class="content-title" v-if="threeData.length !== 0">三天前</view>
+    <view class="content-userlist" v-for="item in threeData" :key="item.id">
+      <view class="userlist-img">
+        <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
+      </view>
+      <view class="userlist-text">{{ item.friend_data.nickname }}</view>
+      <view class="userlist-btn">
+        <view class="btn" v-if="item.friend_state == 0">已接受</view>
+        <view class="btna" v-else @click="clickChangFriend(item.user_id)">接受</view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import { getFriendApply } from '@/api/index'
+import { getFriendApply, changFriend } from '@/api/index'
 
 export default {
   data() {
     return {
-      friendApplyData: []
+      recentlyData: [],
+      threeData: [],
+      timeText: ''
     }
   },
-  async onLoad() {
-    const data = {
-      user_id: this.$store.state.id
-    }
-    this.friendApplyData = await getFriendApply({ data })
+  onLoad() {
+    this.getData()
   },
-  methods: {}
+  methods: {
+    async getData(user_id) {
+      const data = {
+        user_id: this.$store.state.id
+      }
+      const res = await getFriendApply({ data })
+      for (let i of res) {
+        this.getTime(i.application_time, i, user_id)
+      }
+    },
+    getTime(time, i, user_id) {
+      const now = new Date()
+      const applicationTime = new Date(time)
+      let tnow = now.getTime()
+      let tapplicationTime = applicationTime.getTime()
+      if (tnow - tapplicationTime > 3 * 24 * 60 * 60 * 1000) {
+        const bol = this.threeData.some((item) => item.id == i.id)
+        if (!bol) {
+          this.threeData.push(i)
+        } else {
+          for (let i of this.threeData) {
+            if (i.user_id === user_id) {
+              i.friend_state = 0
+            }
+          }
+        }
+      } else {
+        const bol = this.recentlyData.some((item) => item.id == i.id)
+        if (!bol) {
+          this.recentlyData.push(i)
+        } else {
+          for (let i of this.recentlyData) {
+            if (i.user_id === user_id) {
+              i.friend_state = 0
+            }
+          }
+        }
+      }
+    },
+    async clickChangFriend(user_id) {
+      const params = {
+        friend_state: 0
+      }
+      await changFriend(user_id, params)
+      uni.$u.toast('已接受')
+      this.getData(user_id)
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .friend {
+  .content-title {
+    font-size: 35rpx;
+    padding: 20rpx;
+  }
   .content-userlist {
     display: flex;
     height: 120rpx;

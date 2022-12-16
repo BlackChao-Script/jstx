@@ -92,7 +92,6 @@ export default {
         user_id: this.$store.state.id
       }
       const { avatar } = await getUserInfo({ data })
-      console.log(avatar)
       const res = await getFriendApply({ data })
       if (res.length !== 0) {
         for (let i of res) {
@@ -184,7 +183,7 @@ export default {
           font-size: 30rpx;
         }
         .content-text {
-          width: 500rpx;
+          width: 450rpx;
           font-size: 25rpx;
           color: #95969b;
           overflow: hidden; //超出的文本隐藏
