@@ -87,12 +87,26 @@ export default {
       })
       for (let i of res) {
         if (i.friend_state === 0) {
-          let fastName = pinyin(i.friend_data.nickname[0], { pattern: 'first' })
+          let fastName = []
+          if (i.user_id == this.$store.state.id) {
+            fastName = pinyin(i.friend_id.nickname[0], { pattern: 'first' })
+          } else {
+            fastName = pinyin(i.friend_data.nickname[0], { pattern: 'first' })
+          }
           if (!this.indexList.includes(fastName)) {
             this.indexList.push(fastName)
-            this.FriendDataList.push([i.friend_data])
+            if (i.user_id == this.$store.state.id) {
+              this.FriendDataList.push([i.friend_id])
+            } else {
+              this.FriendDataList.push([i.friend_data])
+            }
           } else {
-            const item = i.friend_data
+            let item = []
+            if (i.user_id == this.$store.state.id) {
+              item = i.friend_id
+            } else {
+              item = i.friend_data
+            }
             for (let k in this.FriendDataList) {
               for (let j in this.FriendDataList[k]) {
                 if (
@@ -105,6 +119,7 @@ export default {
           }
         }
       }
+      // console.log(res)
       // console.log(this.FriendDataList)
     }
   }
