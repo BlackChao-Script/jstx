@@ -104,8 +104,7 @@ export default {
       ]
     }
   },
-  onShow() {
-    console.log('1231`')
+  onLoad() {
     this.getData()
   },
 
@@ -118,7 +117,6 @@ export default {
         user_id: this.$store.state.id
       }
       this.userData = await getUserInfo({ data })
-      console.log('aaaas')
       this.userData.register_time = uni.$u.timeFormat(this.timestamp, 'yyyy-mm-dd hh:MM:ss')
     },
     async modifyUserData() {
