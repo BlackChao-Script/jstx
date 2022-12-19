@@ -30,7 +30,6 @@ fs.writeFile(`${__dirname}/../pages.json`, JSON.stringify(page, '', '\t'), (e) =
     console.error('pages.json生成错误', e)
     return
   }
-  console.log('pages.json 配置文件更新成功')
   // 运行命令
 
   const NODE_ENV = moduleFn === 'build' ? 'production' : 'development' // 环境

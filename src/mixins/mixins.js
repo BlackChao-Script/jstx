@@ -1,8 +1,4 @@
-/*
- * @Description: 全局方法
- * @Author: lairey
- * @LastEditors: fhj
- */
+
 import { publishApi } from '@/api'
 
 export default {

@@ -18,7 +18,7 @@
         <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
       </view>
       <view class="userlist-text">{{ item.friend_data.nickname }}</view>
-      <view class="userlist-btn">
+      <view class="userlist-btn"> 
         <view class="btn" v-if="item.friend_state == 0">已接受</view>
         <view class="btna" v-else @click="clickChangFriend(item.user_id)">接受</view>
       </view>

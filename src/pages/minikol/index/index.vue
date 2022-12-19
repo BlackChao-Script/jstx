@@ -83,7 +83,7 @@ export default {
       applicationTime: ''
     }
   },
-  onLoad() {
+  onShow() {
     this.getData()
   },
   methods: {

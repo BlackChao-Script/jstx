@@ -10,29 +10,41 @@
           ></u-upload>
         </view>
       </u-cell>
+
       <u-cell class="m">
         <view slot="title" class="my-title">
           <view class="title-text">注册</view>
-          <u--text
-            :lines="1"
-            :text="this.userData.register_time"
-            color="#a8a9ad"
-            size="27"
-          ></u--text>
+          <u--text :lines="1" :text="userData.register_time" color="#a8a9ad" size="27"></u--text>
         </view>
       </u-cell>
       <u-cell class="m">
         <view slot="title" class="my-title">
           <view class="title-text">邮箱</view>
-          <u--text :lines="1" :text="this.userData.mail" color="#a8a9ad" size="27"></u--text>
+          <u--text :lines="1" :text="userData.mail" color="#a8a9ad" size="27"></u--text>
         </view>
       </u-cell>
     </u-cell-group>
     <!--  #endif -->
     <!--  #ifdef  MP-WEIXIN -->
     <view class="my-list">
-      <view class="list-title">122</view>
-      <view class="list-content">2</view>
+      <view class="list-title">头像</view>
+      <view class="list-content">
+        <u-upload @afterRead="afterRead" :maxCount="1">
+          <u-avatar :src="userData.avatar" shape="square" size="100"></u-avatar
+        ></u-upload>
+      </view>
+    </view>
+    <view class="my-list">
+      <view class="list-title">注册</view>
+      <view class="list-content">
+        {{ userData.register_time }}
+      </view>
+    </view>
+    <view class="my-list">
+      <view class="list-title">邮箱</view>
+      <view class="list-content">
+        {{ userData.mail }}
+      </view>
     </view>
     <!--  #endif -->
     <view class="my-from">
@@ -92,7 +104,8 @@ export default {
       ]
     }
   },
-  onLoad() {
+  onShow() {
+    console.log('1231`')
     this.getData()
   },
 
@@ -105,6 +118,7 @@ export default {
         user_id: this.$store.state.id
       }
       this.userData = await getUserInfo({ data })
+      console.log('aaaas')
       this.userData.register_time = uni.$u.timeFormat(this.timestamp, 'yyyy-mm-dd hh:MM:ss')
     },
     async modifyUserData() {
@@ -151,14 +165,27 @@ export default {
       display: flex;
       align-items: center;
       .title-text {
-        // margin-left: -20rpx;
+        margin-left: -20rpx;
         margin-right: 30rpx;
         font-size: 30rpx;
       }
     }
   }
-  .my-list{
+  .my-list {
     display: flex;
+    border-bottom: 1rpx solid #ebeced;
+    .list-title {
+      width: 100rpx;
+      margin-right: 30rpx;
+      text-align: center;
+      line-height: 100rpx;
+      padding-bottom: 10rpx;
+    }
+    .list-content {
+      line-height: 100rpx;
+      font-size: 27rpx;
+      color: #a8a9ad;
+    }
   }
   .my-next {
     width: 150rpx;
