@@ -1,6 +1,6 @@
 <template>
   <view class="friend">
-    <view class="content-title">最近</view>
+    <view class="content-title" v-if="recentlyData.length !== 0">最近</view>
     <view class="content-userlist" v-for="item in recentlyData" :key="item.id">
       <view class="userlist-img">
         <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
@@ -18,7 +18,7 @@
         <u-avatar :src="item.friend_data.avatar" shape="square" size="90"></u-avatar>
       </view>
       <view class="userlist-text">{{ item.friend_data.nickname }}</view>
-      <view class="userlist-btn"> 
+      <view class="userlist-btn">
         <view class="btn" v-if="item.friend_state == 0">已接受</view>
         <view class="btna" v-else @click="clickChangFriend(item.user_id)">接受</view>
       </view>

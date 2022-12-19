@@ -46,7 +46,7 @@
           <view class="content-title">好友请求</view>
           <view class="content-text">你的新朋友来了</view>
         </view>
-        <view class="box-time">{{ this.applicationTime }}</view>
+        <view class="box-time">{{ applicationTime }}</view>
       </view>
       <view class="list-box" v-for="(item, index) in 20" :key="index" @click="toChitchat">
         <view class="box-img">
@@ -83,7 +83,7 @@ export default {
       applicationTime: ''
     }
   },
-  onShow() {
+  onLoad() {
     this.getData()
   },
   methods: {
@@ -99,7 +99,10 @@ export default {
             this.friendApplyNum++
           }
         }
-        this.applicationTime = this.dateTime(res[res.length - 1].application_time)
+        this.applicationTime = this.dateTime(
+          res[res.length - 1].application_time,
+          'applicationTime'
+        )
       }
 
       this.user_src = avatar

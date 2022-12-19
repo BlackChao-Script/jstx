@@ -1,4 +1,3 @@
-
 import { publishApi } from '@/api'
 
 export default {
@@ -133,7 +132,7 @@ export default {
      * @param {*} e
      * @return {*} 时间
      */
-    dateTime(e) {
+    dateTime(e, applicationTime) {
       let old = new Date(e)
       let now = new Date()
       // 获取old的具体时间
@@ -178,6 +177,9 @@ export default {
         if (m < 10) {
           m = '0' + h
         }
+        if (applicationTime) {
+          return M + '月' + D + '日'
+        }
         return M + '月' + D + '日' + h + ':' + m
       } else {
         // 大于今年
@@ -186,6 +188,9 @@ export default {
         }
         if (m < 10) {
           m = '0' + m
+        }
+        if (applicationTime) {
+          return Y + '' + M + '月'
         }
         return Y + '' + M + '月' + D + '日' + h + ':' + m
       }
