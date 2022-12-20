@@ -42,7 +42,7 @@ export default {
       user_id: op.user_id
     }
     this.friend_id = op.user_id
-    this.userData = await getUserInfo({ data })
+    this.userData = await getUserInfo({ data, custom: { auth: true } })
     console.log(this.userData)
   },
   methods: {

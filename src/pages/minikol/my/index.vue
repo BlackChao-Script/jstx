@@ -116,7 +116,7 @@ export default {
       const data = {
         user_id: this.$store.state.id
       }
-      this.userData = await getUserInfo({ data })
+      this.userData = await getUserInfo({ data, custom: { auth: true } })
       this.userData.register_time = uni.$u.timeFormat(this.timestamp, 'yyyy-mm-dd hh:MM:ss')
     },
     async modifyUserData() {
@@ -126,7 +126,7 @@ export default {
         sex: this.userData.sex
       }
       try {
-        await modifyUser(this.$store.state.id, params)
+        await modifyUser(this.$store.state.id, params, { custom: { auth: true } })
         uni.$u.toast('修改成功')
       } catch (err) {
         uni.$u.toast('修改失败')
@@ -146,7 +146,7 @@ export default {
           const params = {
             avatar: uploadFileRes.data.split('{')[2].split('"')[3]
           }
-          await modifyUser(this.$store.state.id, params)
+          await modifyUser(this.$store.state.id, params, { custom: { auth: true } })
           this.getData()
         }
       })

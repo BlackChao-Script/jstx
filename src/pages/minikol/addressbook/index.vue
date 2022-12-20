@@ -68,7 +68,7 @@ export default {
       const data = {
         user_id: this.$store.state.id
       }
-      const res = await getFriendApply({ data })
+      const res = await getFriendApply({ data, custom: { auth: true } })
       res.sort((a, b) => {
         if (
           pinyin(a.friend_data.nickname, { pattern: 'first' }) <

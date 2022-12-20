@@ -45,7 +45,7 @@ export default {
       const data = {
         user_id: this.$store.state.id
       }
-      const res = await getFriendApply({ data })
+      const res = await getFriendApply({ data, custom: { auth: true } })
       for (let i of res) {
         this.getTime(i.application_time, i, user_id)
       }
@@ -83,7 +83,7 @@ export default {
       const params = {
         friend_state: 0
       }
-      await changFriend(user_id, params)
+      await changFriend(user_id, params, { custom: { auth: true } })
       uni.$u.toast('已接受')
       this.getData(user_id)
     }

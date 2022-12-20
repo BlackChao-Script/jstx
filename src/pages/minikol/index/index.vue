@@ -91,8 +91,8 @@ export default {
       const data = {
         user_id: this.$store.state.id
       }
-      const { avatar } = await getUserInfo({ data })
-      const res = await getFriendApply({ data })
+      const { avatar } = await getUserInfo({ data, custom: { auth: true } })
+      const res = await getFriendApply({ data, custom: { auth: true } })
       if (res.length !== 0) {
         for (let i of res) {
           if (i.friend_state === 1) {

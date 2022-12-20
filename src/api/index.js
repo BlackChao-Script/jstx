@@ -22,3 +22,6 @@ export const addFriend = (params, config = {}) => http.post('/friend/addfriend',
 export const getFriendApply = (data, config = {}) => http.get('/friend/getFriendApply', data, config)
 // 更新好友申请状态
 export const changFriend = (user_id, params, config = {}) => http.put(`/friend/changFriend/${user_id}`, params, config)
+
+// 创建群聊
+export const createGroup = (params, config = {}) => http.post('/group/create', params, config)

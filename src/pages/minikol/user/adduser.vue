@@ -32,7 +32,7 @@ export default {
       user_id: op.user_id
     }
     this.friend_id = op.user_id
-    this.userData = await getUserInfo({ data })
+    this.userData = await getUserInfo({ data, custom: { auth: true } })
   },
   methods: {
     toBack() {
@@ -43,7 +43,7 @@ export default {
         user_id: this.$store.state.id,
         friend_id: this.friend_id * 1
       }
-      await addFriend(params)
+      await addFriend(params, { custom: { auth: true } })
       uni.$u.toast('好友申请已发送')
       setTimeout(() => {
         this.toBack()

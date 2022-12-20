@@ -48,7 +48,7 @@
       </u-checkbox-group>
     </view>
     <view class="creatgroup-btn">
-      <view class="btn">
+      <view class="btn" @click="clickCreateGroup">
         {{ `创建${checkboxValue1.length > 0 ? `(${checkboxValue1.length})` : ''}` }}
       </view>
     </view>
@@ -58,7 +58,7 @@
 <script>
 import Nav from '@common/nav.vue'
 
-import { getFriendApply } from '@/api/index'
+import { getFriendApply, createGroup } from '@/api/index'
 
 export default {
   components: {
@@ -88,7 +88,7 @@ export default {
       const data = {
         user_id
       }
-      const res = await getFriendApply({ data })
+      const res = await getFriendApply({ data, custom: { auth: true } })
       for (let i of res) {
         if (i.friend_id.id == user_id) {
           this.friendData.push(i.friend_data)
@@ -96,6 +96,19 @@ export default {
           this.friendData.push(i.friend_id)
         }
       }
+    },
+    async clickCreateGroup() {
+      if (this.groupnamevalue == '' && this.checkboxValue1.length == 0) {
+        uni.$u.toast('请先填写群名与选择群成员')
+        return
+      }
+      const params = {
+        groupmast_id: this.$store.state.id,
+        group_name: this.groupnamevalue,
+        group_ids: this.checkboxValue1
+      }
+      await createGroup(params)
+      uni.$u.toast('创建成功')
     }
   }
 }
