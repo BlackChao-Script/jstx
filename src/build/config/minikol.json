@@ -1,6 +1,12 @@
 {
   "pages": [
     {
+      "path": "pages/minikol/group/creatgroup"
+    },
+    {
+      "path": "pages/minikol/group/details"
+    },
+    {
       "path": "pages/minikol/login/index"
     },
     {
@@ -28,14 +34,9 @@
       "path": "pages/minikol/user/index"
     },
     {
-      "path": "pages/minikol/group/details"
-    },
-    {
       "path": "pages/minikol/group/modify"
     },
-    {
-      "path": "pages/minikol/group/creatgroup"
-    },
+
     {
       "path": "pages/minikol/phone/voiceCalls"
     },

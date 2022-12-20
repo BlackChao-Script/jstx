@@ -6,7 +6,7 @@
       customNavHeight="-10000"
       :sticky="false"
     >
-      <view class="list-cell">
+      <view class="list-cell" @click="toFriend">
         <view class="cell-icon"
           ><u-avatar
             icon="man-add"
@@ -121,6 +121,9 @@ export default {
       }
       // console.log(res)
       // console.log(this.FriendDataList)
+    },
+    toFriend() {
+      this.toNextPage('/pages/minikol/user/friend')
     }
   }
 }

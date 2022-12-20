@@ -25,7 +25,7 @@
     <view class="creatgroup-name">用户</view>
     <view class="creatgroup-list">
       <u-checkbox-group v-model="checkboxValue1" placement="column" @change="checkboxChange">
-        <view class="list-item" v-for="(item, index) in checkboxList1">
+        <view class="list-item" v-for="(item, index) in friendData" :key="index">
           <view class="item-left">
             <u-checkbox
               shape="circle"
@@ -34,15 +34,15 @@
               iconColor="#000"
               size="30rpx"
               :key="index"
-              :name="item.name"
+              :name="item.id"
             >
             </u-checkbox>
           </view>
           <view class="item-right">
             <view class="right-userimg">
-              <image class="userimg-img" :src="userImg"></image>
+              <image class="userimg-img" :src="item.avatar"></image>
             </view>
-            <view class="right-username">老王老王</view>
+            <view class="right-username">{{ item.nickname }}</view>
           </view>
         </view>
       </u-checkbox-group>
@@ -58,6 +58,8 @@
 <script>
 import Nav from '@common/nav.vue'
 
+import { getFriendApply } from '@/api/index'
+
 export default {
   components: {
     Nav
@@ -66,35 +68,12 @@ export default {
     return {
       boxIcon: require('@/assets/img/群聊.png'),
       groupnamevalue: '',
-      userImg: 'https://cdn.uviewui.com/uview/album/5.jpg',
       checkboxValue1: [],
-      checkboxList1: [
-        {
-          name: '苹果1'
-        },
-        {
-          name: '苹果2'
-        },
-        {
-          name: '苹果3'
-        },
-        {
-          name: '苹果4'
-        },
-        {
-          name: '苹果5'
-        },
-        {
-          name: '苹果6'
-        },
-        {
-          name: '香蕉'
-        },
-        {
-          name: '橙子'
-        }
-      ]
+      friendData: []
     }
+  },
+  onLoad() {
+    this.getFriendData()
   },
 
   methods: {
@@ -103,6 +82,20 @@ export default {
     },
     toBack() {
       this.toBackPage()
+    },
+    async getFriendData() {
+      const user_id = this.$store.state.id
+      const data = {
+        user_id
+      }
+      const res = await getFriendApply({ data })
+      for (let i of res) {
+        if (i.friend_id.id == user_id) {
+          this.friendData.push(i.friend_data)
+        } else {
+          this.friendData.push(i.friend_id)
+        }
+      }
     }
   }
 }
