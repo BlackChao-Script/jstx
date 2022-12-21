@@ -20,8 +20,8 @@
         </view>
         <view class="userlist-text">{{ item.nickname }}</view>
         <view class="userlist-btn">
-          <!-- <view class="btn">发消息</view> -->
-          <view class="btna" @click="spanAddUser(item.id)">加好友</view>
+          <view class="btn" v-if="item.friend_state == 0">发消息</view>
+          <view class="btna" v-else @click="spanAddUser(item.id)">加好友</view>
         </view>
       </view>
       <u-empty
@@ -86,11 +86,11 @@ export default {
     },
     async searchUser() {
       const data = {
-        userKeyword: this.userKeyword
+        userKeyword: this.userKeyword,
+        user_id: this.$store.state.id
       }
       const res = await search({ data })
-      this.resObj = res.resObj
-      // console.log(this.resObj)
+      this.resObj = res
       if (this.resObj.group.length == 0 && this.resObj.user.length == 0) {
         this.showEmpty = true
         this.showSearchContent = false
@@ -98,6 +98,7 @@ export default {
         this.showEmpty = false
         this.showSearchContent = true
       }
+      console.log(this.resObj)
     },
     async spanAddUser(friend_id) {
       const user_id = this.$store.state.id
@@ -117,6 +118,10 @@ export default {
     }
   }
 }
+// const data = {
+//         user_id: user_id
+//       }
+//       const res = await getFriendApply({ data, custom: { auth: true } })
 </script>
 
 <style lang="scss">

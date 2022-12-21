@@ -34,7 +34,7 @@
         <template v-for="(item, index) in FriendDataList">
           <u-index-item>
             <u-index-anchor :text="indexList[index]"></u-index-anchor>
-            <view class="list-cell" v-for="(v, i) in item" :key="i">
+            <view class="list-cell" v-for="(v, i) in item" :key="i" @click="toFriendIndex(v.id)">
               <view class="cell-img">
                 <u-avatar :src="v.avatar" shape="square" size="80"></u-avatar>
               </view>
@@ -85,8 +85,11 @@ export default {
         }
         return 0
       })
+
       for (let i of res) {
         if (i.friend_state === 0) {
+          i.friend_data.friend_state = i.friend_state
+          i.friend_id.friend_state = i.friend_state
           let fastName = []
           if (i.user_id == this.$store.state.id) {
             fastName = pinyin(i.friend_id.nickname[0], { pattern: 'first' })
@@ -119,14 +122,29 @@ export default {
           }
         }
       }
-      // console.log(res)
-      // console.log(this.FriendDataList)
     },
     toFriend() {
       this.toNextPage('/pages/minikol/user/friend')
     },
-    toGroup(){
+    toGroup() {
       this.toNextPage('/pages/minikol/group/list')
+    },
+    toFriendIndex(id) {
+      let state = ''
+      for (let i of this.FriendDataList) {
+        for (let o of i) {
+          if (o.id == id) {
+            state = o.friend_state
+          }
+        }
+      }
+      this.$u.route({
+        url: '/pages/minikol/user/index',
+        params: {
+          user_id: id,
+          state
+        }
+      })
     }
   }
 }

@@ -47,6 +47,7 @@ export default {
       }
       const res = await getFriendApply({ data, custom: { auth: true } })
       for (let i of res) {
+        if (i.user_id == this.$store.state.id) return
         this.getTime(i.application_time, i, user_id)
       }
     },

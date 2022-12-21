@@ -102,12 +102,13 @@ export default {
         uni.$u.toast('请先填写群名与选择群成员')
         return
       }
+      const ids = [...this.checkboxValue1, this.$store.state.id]
       const params = {
         groupmast_id: this.$store.state.id,
         group_name: this.groupnamevalue,
-        group_ids: this.checkboxValue1
+        group_ids: ids
       }
-      await createGroup(params)
+      await createGroup(params, { custom: { auth: true } })
       uni.$u.toast('创建成功')
       setTimeout(() => {
         this.toNextPage('/pages/minikol/group/list')

@@ -19,7 +19,8 @@
         <view class="title-namea">昵称：{{ userData.nickname }}</view>
       </view>
       <view class="box-text">{{ userData.signature }}</view>
-      <view class="box-btn" @click="addUser">加为好友</view>
+      <view class="box-btn" @click="hairMessage" v-if="state == 0">发消息</view>
+      <view class="box-btn" @click="addUser" v-else>加为好友</view>
     </view>
   </view>
 </template>
@@ -34,16 +35,19 @@ export default {
       nvImg: require('@/assets/img/女.png'),
       sex: '男',
       friend_id: '',
-      userData: {}
+      userData: {},
+      state: 1
     }
   },
   async onLoad(op) {
+    if (op.state) {
+      this.state = op.state
+    }
     const data = {
       user_id: op.user_id
     }
     this.friend_id = op.user_id
     this.userData = await getUserInfo({ data, custom: { auth: true } })
-    console.log(this.userData)
   },
   methods: {
     addUser() {
@@ -52,6 +56,11 @@ export default {
         params: {
           user_id: this.friend_id
         }
+      })
+    },
+    hairMessage() {
+      this.$u.route({
+        url: '/pages/minikol/chitchat/index'
       })
     }
   }
