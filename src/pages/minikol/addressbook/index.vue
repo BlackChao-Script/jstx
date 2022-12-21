@@ -18,7 +18,7 @@
         ></view>
         <view class="cell-text">新的朋友</view>
       </view>
-      <view class="list-cell">
+      <view class="list-cell" @click="toGroup">
         <view class="cell-icon"
           ><u-avatar
             icon="grid"
@@ -124,6 +124,9 @@ export default {
     },
     toFriend() {
       this.toNextPage('/pages/minikol/user/friend')
+    },
+    toGroup(){
+      this.toNextPage('/pages/minikol/group/list')
     }
   }
 }

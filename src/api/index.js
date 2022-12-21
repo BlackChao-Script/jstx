@@ -25,3 +25,5 @@ export const changFriend = (user_id, params, config = {}) => http.put(`/friend/c
 
 // 创建群聊
 export const createGroup = (params, config = {}) => http.post('/group/create', params, config)
+// 获取群聊列表
+export const getGroup = (data, config = {}) => http.get('/group/getList', data, config)

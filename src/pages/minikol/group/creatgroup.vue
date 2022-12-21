@@ -22,7 +22,7 @@
         ></u--input>
       </view>
     </view>
-    <view class="creatgroup-name">用户</view>
+    <view class="creatgroup-name" v-if="friendData.length !== 0">用户</view>
     <view class="creatgroup-list">
       <u-checkbox-group v-model="checkboxValue1" placement="column" @change="checkboxChange">
         <view class="list-item" v-for="(item, index) in friendData" :key="index">
@@ -109,6 +109,9 @@ export default {
       }
       await createGroup(params)
       uni.$u.toast('创建成功')
+      setTimeout(() => {
+        this.toNextPage('/pages/minikol/group/list')
+      }, 1500)
     }
   }
 }

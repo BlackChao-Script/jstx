@@ -4,6 +4,9 @@
       "path": "pages/minikol/login/index"
     },
     {
+      "path": "pages/minikol/group/list"
+    },
+    {
       "path": "pages/minikol/group/details"
     },
     {
