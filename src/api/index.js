@@ -27,3 +27,8 @@ export const changFriend = (user_id, params, config = {}) => http.put(`/friend/c
 export const createGroup = (params, config = {}) => http.post('/group/create', params, config)
 // 获取群聊列表
 export const getGroup = (data, config = {}) => http.get('/group/getList', data, config)
+
+// 获取列表信息
+export const getchitchatMsg = (data, config = {}) => http.get('/chitchat/chitchatList', data, config)
+// 发送信息
+export const sendchitchatMsg = (params, config = {}) => http.post('/chitchat/sendMessage', params, config)

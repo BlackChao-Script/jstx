@@ -1,5 +1,3 @@
-import { publishApi } from '@/api'
-
 export default {
   data() {
     return {}
@@ -36,96 +34,6 @@ export default {
       uni.navigateBack({
         delta: num
       })
-    },
-    /**
-     * @description: 金额保留两位小数
-     * @param {*}
-     * @return {*}
-     */
-    getNum(value) {
-      let realVal = parseFloat(value).toFixed(2)
-      if (value === null) {
-        realVal = 0
-      }
-      return realVal
-    },
-    /**
-     * 金额用，隔开（千分位加逗号）
-     * @param {string | number} num
-     * @return { string } example:100,999,789.12313
-     */
-    numFormat(num) {
-      const newNumber = `${num}`
-      const [integer, decimal] = newNumber.split('.')
-      let formatterNumber = ''
-      formatterNumber = integer.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
-      if (decimal) {
-        formatterNumber += `.${decimal}`
-      }
-      return formatterNumber
-    },
-    /**
-     * 金额用，隔开（千分位加逗号,带2位小数）
-     * @param {string | number} num
-     * @return { string } example:100,999,789.12313
-     */
-    numFormat2(num) {
-      num = parseFloat(num).toFixed(2)
-      if (num === null) {
-        num = 0
-      }
-      const newNumber = `${num}`
-      const [integer, decimal] = newNumber.split('.')
-      let formatterNumber = ''
-      formatterNumber = integer.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
-      if (decimal) {
-        formatterNumber += `.${decimal}`
-      }
-      return formatterNumber
-    },
-    /**
-     * @description:  数字转中文
-     * @param {*} num
-     * @return {*} 中文数字
-     */
-    toChineseNumber(n) {
-      if (!Number.isInteger(n) && n < 0) {
-        throw Error('请输入自然数')
-      }
-      const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
-      const positions = [
-        '',
-        '十',
-        '百',
-        '千',
-        '万',
-        '十万',
-        '百万',
-        '千万',
-        '亿',
-        '十亿',
-        '百亿',
-        '千亿'
-      ]
-      const charArray = String(n).split('')
-      let result = ''
-      let prevIsZero = false
-      // 处理0  deal zero
-      for (let i = 0; i < charArray.length; i++) {
-        const ch = charArray[i]
-        if (ch !== '0' && !prevIsZero) {
-          result += digits[parseInt(ch)] + positions[charArray.length - i - 1]
-        } else if (ch === '0') {
-          prevIsZero = true
-        } else if (ch !== '0' && prevIsZero) {
-          result += '零' + digits[parseInt(ch)] + positions[charArray.length - i - 1]
-        }
-      }
-      // 处理十 deal ten
-      if (n < 100) {
-        result = result.replace('一十', '十')
-      }
-      return result
     },
     /**
      * @description:  处理聊天时间
@@ -175,7 +83,7 @@ export default {
           h = '0' + h
         }
         if (m < 10) {
-          m = '0' + h
+          m = '0' + m
         }
         if (applicationTime) {
           return M + '月' + D + '日'
@@ -206,7 +114,7 @@ export default {
       now = new Date(now)
       let told = old.getTime()
       let tnow = now.getTime()
-      if (told > tnow + 1000 * 60 * 5) {
+      if (told - tnow > 1000 * 60 * 5) {
         return now
       } else {
         return ''

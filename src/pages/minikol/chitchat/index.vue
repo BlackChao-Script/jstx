@@ -13,21 +13,31 @@
     <view class="chitchat-list"></view>
     <scroll-view class="chat" :scroll-y="true" :scroll-with-animation="true">
       <view class="chat-main">
-        <view class="chat-ls" v-for="value in mes" :key="value.tip">
-          <view class="ls-time" v-if="value.time != ''">{{ value.time }}</view>
-          <view class="ls-msg msg-left" :class="[value.id === 'a' ? 'msg-left' : 'msg-right']">
+        <view class="chat-ls" v-for="value in msgData" :key="value.tip">
+          <view class="ls-time" v-if="value.send_time != ''">{{ value.send_time }}</view>
+          <view
+            class="ls-msg msg-left"
+            :class="[value.user_id.id !== user_id ? 'msg-left' : 'msg-right']"
+          >
             <view class="msg">
-              <image :src="value.imgUrl" class="msg-img"></image>
+              <image
+                v-if="value.user_id.id !== user_id"
+                :src="value.user_id.avatar"
+                class="msg-img"
+              ></image>
+              <image v-else :src="value.user_id.avatar" class="msg-img"></image>
             </view>
             <view class="msg-content">
-              <view class="content-text" v-if="value.type === 0">{{ value.message }}</view
-              ><view class="content-img" v-else-if="value.type === 1">
-                <image
+              <view class="content-text" v-if="value.content_type === 0">{{
+                value.sendcontent
+              }}</view
+              ><view class="content-img" v-else-if="value.content_type === 1">
+                <!-- <image
                   :src="value.imgUrl"
                   class="img"
                   mode="widthFix"
                   @click="imgPreview(value.imgUrl)"
-                ></image>
+                ></image> -->
               </view>
             </view>
           </view>
@@ -61,7 +71,7 @@
 
 <script>
 import Nav from '@/common/nav.vue'
-import mes from '@/utils/data.js'
+import { getchitchatMsg, sendchitchatMsg } from '@/api/index'
 
 export default {
   components: { Nav },
@@ -73,12 +83,16 @@ export default {
       boxRightImg: require('@/assets/img/表情.png'),
       boxRightImga: require('@/assets/img/更多.png'),
       value: '',
-      mes,
-      oldTime: new Date()
+      msgData: [],
+      oldTime: new Date(),
+      user_id: '',
+      friend_id: ''
     }
   },
-  onLoad() {
-    this.getMsg(this.mes)
+  onLoad(op) {
+    this.user_id = this.$store.state.id
+    this.friend_id = op.friend_id
+    this.getMsg()
   },
   methods: {
     toBack() {
@@ -89,22 +103,34 @@ export default {
         urls: [img]
       })
     },
-    getMsg(data) {
-      data.reverse()
+    async getMsg() {
+      const data = {
+        user_id: this.user_id,
+        friend_id: this.friend_id
+      }
+      const res = await getchitchatMsg({ data, custom: { auth: true } })
+      this.msgData = res
       // 时间间隔
-      for (let i of data) {
-        let T = this.spacTime(this.oldTime, i.time)
+      for (let i of res) {
+        let T = this.spacTime(this.oldTime, i.send_time)
         if (T) {
           this.oldTime = T
         }
-        i.time = T
-        if (i.time !== '') {
-          i.time = this.dateTime(i.time)
+        i.send_time = T
+        if (i.send_time !== '') {
+          i.send_time = this.dateTime(i.send_time)
         }
       }
     },
-    confirmMessage(e) {
+    async confirmMessage(e) {
       console.log(e.detail.value)
+      const params = {
+        friend_id: this.friend_id,
+        user_id: this.user_id,
+        sendcontent: e.detail.value
+      }
+      await sendchitchatMsg(params, { custom: { auth: true } })
+      this.getMsg()
       this.value = ''
     }
   }

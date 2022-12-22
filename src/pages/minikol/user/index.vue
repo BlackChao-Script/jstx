@@ -60,7 +60,10 @@ export default {
     },
     hairMessage() {
       this.$u.route({
-        url: '/pages/minikol/chitchat/index'
+        url: '/pages/minikol/chitchat/index',
+        params: {
+          friend_id: this.friend_id
+        }
       })
     }
   }
